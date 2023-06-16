@@ -99,7 +99,7 @@ class GetOrderlistModel {
         "cost_center_name": costCenterName,
         "cost_center_erp_id": costCenterErpId,
         "approvers": List<dynamic>.from(approvers!.map((x) => x.toMap())),
-        "products": List<dynamic>.from(products!.map((x) => x.toMap())),
+        "products": List<dynamic>.from(products.map((x) => x.toMap())),
     };
 
 
