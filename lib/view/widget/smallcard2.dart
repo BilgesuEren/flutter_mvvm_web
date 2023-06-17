@@ -1,13 +1,16 @@
 import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_mvvm_web/model/get_proposals_by_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
+
 import '../../model/get_order_list_model.dart';
 import 'big_card /big_card.dart';
-
 
 class BoolNotifier extends StateNotifier<bool> {
   BoolNotifier() : super(false);
@@ -22,11 +25,6 @@ final boolProvider =
 
 final indexProvider = StateProvider<int>((ref) => 0);
 const String pendingSvg = 'assets/pending2.svg';
-const String orderApprovedSvg = 'assets/exportNotes.svg';
-const String orderConfirmedSvg = 'assets/conveyor.svg';
-const String orderPrepared = 'assets/trolley.svg';
-const String orderOnTheWay = 'assets/shipment.svg';
-const String orderDelivered = 'assets/warehouse.svg';
 const String newMessage = 'assets/newMessage.svg';
 const String exportNotes = 'assets/exportNotes.svg';
 final Widget newMessageSvg = SvgPicture.asset(
@@ -36,24 +34,22 @@ final Widget newMessageSvg = SvgPicture.asset(
   height: 35.0,
 );
 
-class SmallCard extends ConsumerWidget {
+class SmallCard2 extends ConsumerWidget {
   final int index;
   final String id;
   final String orderStatus;
   final String demandNo;
-  final String demandName;
   final String orderDate;
   final String deliveryDate;
   final String paymentDueDate;
   final String paymentType;
-  final List<Product>  products;
-  const SmallCard({
+  final List<ProductProposal> products;
+  const SmallCard2({
     Key? key,
     required this.index,
     required this.id,
     required this.orderStatus,
     required this.demandNo,
-    required this.demandName,
     required this.orderDate,
     required this.paymentDueDate,
     required this.paymentType,
@@ -63,27 +59,23 @@ class SmallCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Map<String, String> orderStatusMap = {
-      'pending': FlutterI18n.translate(context, "tr.order.order_pending"),
-      'order_approved': FlutterI18n.translate(context, "tr.order.order_approved"),
-      'order_confirmed': FlutterI18n.translate(context, "tr.order.order_confirmed"),
-      'order_prepared' : FlutterI18n.translate(context, "tr.order.order_prepared"),
-      'order_on_the_way' : FlutterI18n.translate(context, "tr.order.order_on_the_way"),
-      'order_delivered' : FlutterI18n.translate(context, "tr.order.order_delivered"),
+    Map<String, String> statusMap = {
+      'pending': FlutterI18n.translate(context, "tr.proposal.pending"),
+      'replied': FlutterI18n.translate(context, "tr.proposal.replied"),
+      'proposal_stvs':
+          FlutterI18n.translate(context, "tr.proposal.proposal_stvs"),
     };
     Map<String, String> statusIconMap = {
       'pending': pendingSvg,
-      'order_approved': orderApprovedSvg,
-      'order_confirmed': orderConfirmedSvg,
-      'order_prepared': orderPrepared,
-      'order_on_the_way': orderOnTheWay,
-      'order_delivered': orderDelivered
+      'replied': exportNotes,
+      'proposal_stvs': exportNotes
     };
-    //create dateTime object
-    final DateTime parsedDate = DateTime.parse(orderDate);
-    //formating dateTime object
-    String formattedDate =
-        "${parsedDate.year}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.day.toString().padLeft(2, '0')}";
+    final DateTime orderDateTime = DateTime.parse(orderDate);
+    final Duration remaining = orderDateTime.difference(DateTime.now());
+
+    final CountdownController _controller =
+        new CountdownController(autoStart: true);
+
     return Padding(
       padding: const EdgeInsets.only(right: 15, bottom: 15),
       child: Card(
@@ -91,26 +83,22 @@ class SmallCard extends ConsumerWidget {
           color: Theme.of(context).colorScheme.surfaceVariant,
           child: InkWell(
             onTap: () {
-              showDialog(
-                context: context, 
-                builder: ( BuildContext context) {
-                  return Consumer(builder: (context, ref, _) {
-                    return Dialog(
-                      child: BigCard(
-                        id: id,
-                        status: orderStatus,
-                        demandName: demandName,
-                        date: orderDate,
-                        paymentType: paymentType,
-                        demandNo: demandNo,
-                        deliveryDate: deliveryDate,
-                        paymentDueDate: paymentDueDate,
-                        products: products
-                      ),
-                    );
-                  },);
-                }
-              );              
+              // showDialog(
+              //   context: context,
+              //   builder: ( BuildContext context) => Dialog(
+              //     child: BigCard(
+              //       id: id,
+              //       status: orderStatus,
+              //       demandName: demandName,
+              //       date: orderDate,
+              //       paymentType: paymentType,
+              //       demandNo: demandNo,
+              //       deliveryDate: deliveryDate,
+              //       paymentDueDate: paymentDueDate,
+              //       products: products
+              //     ),
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,8 +128,9 @@ class SmallCard extends ConsumerWidget {
                             Expanded(
                                 flex: 15,
                                 child: AutoSizeText(
-                                  orderStatusMap[orderStatus] ?? '',
-                                  style: Theme.of(context).textTheme.titleLarge!,
+                                  statusMap[orderStatus] ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge!,
                                 )),
                             Flexible(child: newMessageSvg),
                           ],
@@ -152,9 +141,32 @@ class SmallCard extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(FlutterI18n.translate(context, "tr.order.no") + demandNo)),
                             Flexible(
-                                child: Text(FlutterI18n.translate(context, "tr.order.order_date") + formattedDate)),
+                                child: Text(FlutterI18n.translate(
+                                        context, "tr.proposal.no") +
+                                    demandNo)),
+                            Flexible(
+                              child: Countdown(
+                                controller: _controller,
+                                seconds: remaining.inSeconds,
+                                build: (_, double time) {
+                                  int timeInt = time.toInt();
+                                  final int days = timeInt ~/ (24 * 3600);
+                                  timeInt = timeInt % (24 * 3600);
+                                  final int hours = timeInt ~/ 3600;
+                                  timeInt %= 3600;
+                                  final int minutes = timeInt ~/ 60;
+                                  final int seconds = timeInt % 60;
+
+                                  return Text(
+                                      "$days G $hours:$minutes:$seconds");
+                                },
+                                interval: Duration(seconds: 1),
+                                onFinished: () {
+                                  print('Zaman doldu!');
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -162,9 +174,9 @@ class SmallCard extends ConsumerWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0, left: 16.0),
-                  child: Text(demandName)
-                ),
+                    padding: const EdgeInsets.only(
+                        bottom: 8.0, top: 8.0, left: 16.0),
+                    child: Text('Acil teklif istegi')),
                 const SizedBox(
                   height: 4,
                 ),
@@ -186,10 +198,11 @@ class SmallCard extends ConsumerWidget {
                             Expanded(
                               flex: 2,
                               child: AutoSizeText(
-                                FlutterI18n.translate(context, "tr.order.product"),
+                                FlutterI18n.translate(
+                                    context, "tr.proposal.product"),
                                 textDirection: TextDirection.ltr,
                                 maxLines: 1,
-                                ),
+                              ),
                             ),
                             const Spacer(
                               flex: 6,
@@ -201,31 +214,25 @@ class SmallCard extends ConsumerWidget {
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children:  [
+                        children: [
                           const Spacer(
                             flex: 6,
                           ),
                           Expanded(
                             flex: 9,
-                            child: Text(FlutterI18n.translate(context, "tr.order.order")),
+                            child: Text(FlutterI18n.translate(
+                                context, "tr.proposal.amount")),
                           ),
                           const Spacer(
                             flex: 3,
                           ),
                           Flexible(
-                            flex: 4,
-                            child: orderStatus == 'order_approved'
-                            ? AutoSizeText(
-                                FlutterI18n.translate(context, "tr.order.price"),
-                                textDirection: TextDirection.ltr,
-                                maxLines: 1
-                              )
-                            : AutoSizeText(
-                                FlutterI18n.translate(context, "tr.order.ship"),
-                                textDirection: TextDirection.ltr,
-                                maxLines: 1
-                              ),
-                          ),
+                              flex: 4,
+                              child: AutoSizeText(
+                                  FlutterI18n.translate(
+                                      context, "tr.proposal.price"),
+                                  textDirection: TextDirection.ltr,
+                                  maxLines: 1)),
                           const Spacer(
                             flex: 4,
                           ),
@@ -254,17 +261,16 @@ class SmallCard extends ConsumerWidget {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: AutoSizeText(
-                                    (i + 1).toString(),
-                                    textDirection: TextDirection.ltr,
-                                    maxLines: 1),
+                                  child: AutoSizeText((i + 1).toString(),
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1),
                                 ),
                                 Expanded(
                                   flex: 10,
                                   child: AutoSizeText(
-                                    products[i].name.toString(),
-                                    textDirection: TextDirection.ltr,
-                                    maxLines: 1),
+                                      products[i].productName.toString(),
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1),
                                 ),
                               ],
                             ),
@@ -283,28 +289,19 @@ class SmallCard extends ConsumerWidget {
                                 Expanded(
                                   flex: 6,
                                   child: AutoSizeText(
-                                    products[i].amount.toString() + ' adet',
-                                    textDirection: TextDirection.ltr,
-                                    maxLines: 1
-                                  ),
+                                      products[i].amount.toString() + ' adet',
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1),
                                 ),
                                 const Spacer(
                                   flex: 2,
                                 ),
-                                 Expanded(
-                                  flex: 3,
-                                  child: (orderStatus == 'order_approved') 
-                                  ? AutoSizeText(
-                                      products[i].price.toString() + ' ₺',
-                                      textDirection: TextDirection.ltr,
-                                      maxLines: 1
-                                   )
-                                  : AutoSizeText(
-                                      products[i].amount.toString() + ' adet',
-                                      textDirection: TextDirection.ltr,
-                                      maxLines: 1
-                                    ),
-                                ),
+                                Expanded(
+                                    flex: 3,
+                                    child: AutoSizeText(
+                                        products[i].price.toString() + ' ₺',
+                                        textDirection: TextDirection.ltr,
+                                        maxLines: 1)),
                                 const Spacer(
                                   flex: 1,
                                 ),
@@ -325,41 +322,24 @@ class SmallCard extends ConsumerWidget {
   }
 }
 
-
-
-
-  // FutureOr<void> _dialogBuilder(
-  //   BuildContext context, 
-  //   id, 
-  //   status, 
-  //   demandName,
-  //   date, 
-  //   paymentType, 
-  //   demandNo, 
-  //   deliveryDate, 
-  //   paymentDueDate, 
-  //   products
-
-  // ) async {
-  //   await showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Dialog(
-  //         child: BigCard(
-  //           key: context,
-  //           id: id, 
-  //           status: status, 
-  //           demandName: demandName,
-  //           date: date, 
-  //           paymentType: paymentType, 
-  //           demandNo: demandNo, 
-  //           deliveryDate: deliveryDate, 
-  //           paymentDueDate: paymentDueDate, 
-  //           products: products
-  //         )
-  //       );
-  //     }
-  //   );
-  //   debugPrint('------context---------$context');
-  //   debugPrint('------after---------$Dialog');
-  // }
+FutureOr<void> _dialogBuilder(BuildContext context, id, status, demandName,
+    date, paymentType, demandNo, deliveryDate, paymentDueDate, products) async {
+  debugPrint('Before calling showDialog');
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+            child: BigCard(
+                id: id,
+                status: status,
+                demandName: demandName,
+                date: date,
+                paymentType: paymentType,
+                demandNo: demandNo,
+                deliveryDate: deliveryDate,
+                paymentDueDate: paymentDueDate,
+                products: products));
+      });
+  debugPrint('------context---------$context');
+  debugPrint('------after---------$Dialog');
+}

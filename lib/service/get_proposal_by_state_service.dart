@@ -8,7 +8,7 @@ import '../storage/jwt_storage.dart';
 
 class getProposalListService {
   static const String _url =
-      "https://test.satta.biz/api/v1/proposals_by_state.json?proposal_state='pending'";
+      "https://test.satta.biz/api/v1/proposals_by_state.json?proposal_state='pending','replied','proposal_stvs'";
 
   Future<List<GetProposalModel>> getProposalListData() async {
     final dio = Dio();

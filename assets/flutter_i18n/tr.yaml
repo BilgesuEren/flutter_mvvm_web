@@ -36,3 +36,12 @@ tr:
     amount: "Miktar"
     total: "Tutar"
     expiry: "Vade:"
+  proposal:
+    pending: "Teklif Istendi"
+    replied: "Teklif verildi"
+    proposal_stvs: "Teklif Verildi"
+    no: "No:"
+    product: "Ürün"
+    amount: "Miktar"
+    price: "Fiyat"
+

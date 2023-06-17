@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_mvvm_web/model/get_proposals_by_state.dart';
+import 'package:flutter_mvvm_web/service/get_proposal_by_state_service.dart';
 import 'package:flutter_mvvm_web/view/widget/small_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../model/get_order_list_model.dart';
-import '../../view_model/order_list_view_model.dart';
+import '../../view_model/proposal_view_model.dart';
 import '../widget/appbar.dart';
 import '../widget/main_page_content.dart';
 import '../widget/nav_rail.dart';
+import '../widget/smallcard2.dart';
 
 
-class OrderView extends ConsumerWidget {
-  const OrderView({Key? key}) : super(key: key);
+class proposalView extends ConsumerWidget {
+  const proposalView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final orderListAsyncValue = ref.watch(getOrderListProvider);
+    final orderListAsyncValue = ref.watch(proposalListview);
 
     return orderListAsyncValue.when(
       data: (orderList) {
@@ -60,7 +63,7 @@ class OrderView extends ConsumerWidget {
     );
   }
 
-  Padding buildBody(List<GetOrderlistModel> orderList, BuildContext context, String string) {
+  Padding buildBody(List<GetProposalModel> orderList, BuildContext context, String string) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: LayoutBuilder(
@@ -82,17 +85,16 @@ class OrderView extends ConsumerWidget {
                   itemCount: orderList.length,
                   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
-                    return SmallCard(
+                    return SmallCard2(
                       index: index,
-                      id: orderList[index].id.toString(),
-                      demandNo: orderList[index].demandNo.toString(),
-                      demandName: orderList[index].demandName.toString(),
-                      orderDate: orderList[index].orderDate.toString(),
+                      id: orderList[index].proposalId.toString(),
+                      demandNo: orderList[index].proposalId.toString(),  
+                      orderDate: orderList[index].proposalValidDate.toString(),
                       deliveryDate: orderList[index].deliveryDate.toString(),
                       paymentDueDate: orderList[index].paymentDueDate.toString(),
-                      orderStatus: orderList[index].state.toString(),
+                      orderStatus: orderList[index].proposalState.toString(),
                       paymentType: orderList[index].paymentType.toString(),
-                      products: orderList[index].products, 
+                      products: orderList[index].productProposals!, 
                     );
                   },
                 ),
