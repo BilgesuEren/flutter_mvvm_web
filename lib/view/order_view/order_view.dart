@@ -26,7 +26,7 @@ class OrderView extends ConsumerWidget {
               return Scaffold(
                 drawer: const Drawer(child: NavigationRailDrawer()),
                 appBar: AppbarTop(), //appbar
-                body: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders")),
+                body: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders"), "order"),
               );
             } else {
               return Scaffold(
@@ -40,7 +40,7 @@ class OrderView extends ConsumerWidget {
                       ),
                       Expanded(
                         flex: 9,
-                        child: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders")), //order screen body
+                        child: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders"), "order"), //order screen body
                       ),
                     ],
                   ),
@@ -60,7 +60,7 @@ class OrderView extends ConsumerWidget {
     );
   }
 
-  Padding buildBody(List<GetOrderlistModel> orderList, BuildContext context, String string) {
+  Padding buildBody(List<GetOrderlistModel> orderList, BuildContext context, String topic, String className) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: LayoutBuilder(
@@ -71,7 +71,7 @@ class OrderView extends ConsumerWidget {
               Visibility(
                 visible: constraints.maxHeight > 300,
                 child: allMainPageContent(
-                  topic: 'Siparişler',
+                  topic: topic,
                 ),
               ),
               Flexible(
@@ -85,14 +85,15 @@ class OrderView extends ConsumerWidget {
                     return SmallCard(
                       index: index,
                       id: orderList[index].id.toString(),
-                      demandNo: orderList[index].demandNo.toString(),
-                      demandName: orderList[index].demandName.toString(),
-                      orderDate: orderList[index].orderDate.toString(),
-                      deliveryDate: orderList[index].deliveryDate.toString(),
-                      paymentDueDate: orderList[index].paymentDueDate.toString(),
-                      orderStatus: orderList[index].state.toString(),
+                      className: className,
+                      status: orderList[index].state.toString(),
+                      headerDate: orderList[index].orderDate.toString(),
+                      bodyHeader: orderList[index].demandName.toString(),
                       paymentType: orderList[index].paymentType.toString(),
-                      products: orderList[index].products, 
+                      demandNo: orderList[index].demandNo.toString(),
+                      deliveryDate: orderList[index].deliveryDate.toString(),
+                      paymentDueDate: orderList[index].paymentDueDate.toString(), 
+                      bodyList: orderList[index].products,
                     );
                   },
                 ),

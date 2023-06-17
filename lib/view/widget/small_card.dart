@@ -38,27 +38,30 @@ final Widget newMessageSvg = SvgPicture.asset(
 
 class SmallCard extends ConsumerWidget {
   final int index;
+  final String className;
   final String id;
-  final String orderStatus;
-  final String demandNo;
-  final String demandName;
-  final String orderDate;
-  final String deliveryDate;
-  final String paymentDueDate;
-  final String paymentType;
-  final List<Product>  products;
+  final String status;
+  final String bodyHeader;
+  final String headerDate;
+  final String paymentType; //info_2 (column1)
+  final String demandNo; //info_3 (column1)
+  final String deliveryDate; //info_1 (column2)
+  final String paymentDueDate; //info_2 (column2)
+  final List  bodyList;
+
   const SmallCard({
     Key? key,
     required this.index,
+    required this.className,
     required this.id,
-    required this.orderStatus,
-    required this.demandNo,
-    required this.demandName,
-    required this.orderDate,
-    required this.paymentDueDate,
+    required this.status,
+    required this.bodyHeader,
+    required this.headerDate,
     required this.paymentType,
+    required this.demandNo,
     required this.deliveryDate,
-    required this.products,
+    required this.paymentDueDate,
+    required this.bodyList,
   }) : super(key: key);
 
   @override
@@ -71,6 +74,15 @@ class SmallCard extends ConsumerWidget {
       'order_on_the_way' : FlutterI18n.translate(context, "tr.order.order_on_the_way"),
       'order_delivered' : FlutterI18n.translate(context, "tr.order.order_delivered"),
     };
+
+    Map<String, String> bodyListMap = {
+      'pending': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_approved': FlutterI18n.translate(context, "tr.order.price"),
+      'order_confirmed': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_prepared' : FlutterI18n.translate(context, "tr.order.ship"),
+      'order_on_the_way' : FlutterI18n.translate(context, "tr.order.ship"),
+      'order_delivered' : FlutterI18n.translate(context, "tr.order.ship"),
+    };  
     Map<String, String> statusIconMap = {
       'pending': pendingSvg,
       'order_approved': orderApprovedSvg,
@@ -80,7 +92,7 @@ class SmallCard extends ConsumerWidget {
       'order_delivered': orderDelivered
     };
     //create dateTime object
-    final DateTime parsedDate = DateTime.parse(orderDate);
+    final DateTime parsedDate = DateTime.parse(headerDate);
     //formating dateTime object
     String formattedDate =
         "${parsedDate.year}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.day.toString().padLeft(2, '0')}";
@@ -98,14 +110,15 @@ class SmallCard extends ConsumerWidget {
                     return Dialog(
                       child: BigCard(
                         id: id,
-                        status: orderStatus,
-                        demandName: demandName,
-                        date: orderDate,
+                        className: className,
+                        status: status,
+                        topic: bodyHeader,
+                        date: headerDate,
                         paymentType: paymentType,
                         demandNo: demandNo,
                         deliveryDate: deliveryDate,
                         paymentDueDate: paymentDueDate,
-                        products: products
+                        tableList: bodyList
                       ),
                     );
                   },);
@@ -131,7 +144,7 @@ class SmallCard extends ConsumerWidget {
                           children: [
                             Flexible(
                               child: SvgPicture.asset(
-                                statusIconMap[orderStatus] ?? '',
+                                statusIconMap[status] ?? '',
                                 semanticsLabel: 'Order Status Icon',
                                 width: 30.0,
                                 height: 30.0,
@@ -140,7 +153,7 @@ class SmallCard extends ConsumerWidget {
                             Expanded(
                                 flex: 15,
                                 child: AutoSizeText(
-                                  orderStatusMap[orderStatus] ?? '',
+                                  orderStatusMap[status] ?? '',
                                   style: Theme.of(context).textTheme.titleLarge!,
                                 )),
                             Flexible(child: newMessageSvg),
@@ -152,7 +165,7 @@ class SmallCard extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(FlutterI18n.translate(context, "tr.order.no") + demandNo)),
+                            Flexible(child: Text(FlutterI18n.translate(context, "tr.order.no") + id)),
                             Flexible(
                                 child: Text(FlutterI18n.translate(context, "tr.order.order_date") + formattedDate)),
                           ],
@@ -163,7 +176,7 @@ class SmallCard extends ConsumerWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, top: 8.0, left: 16.0),
-                  child: Text(demandName)
+                  child: Text(bodyHeader)
                 ),
                 const SizedBox(
                   height: 4,
@@ -207,24 +220,16 @@ class SmallCard extends ConsumerWidget {
                           ),
                           Expanded(
                             flex: 9,
-                            child: Text(FlutterI18n.translate(context, "tr.order.order")),
+                            child: Text(FlutterI18n.translate(context, "tr.order.order")), //buraya bakilacak
                           ),
                           const Spacer(
                             flex: 3,
                           ),
                           Flexible(
                             flex: 4,
-                            child: orderStatus == 'order_approved'
-                            ? AutoSizeText(
-                                FlutterI18n.translate(context, "tr.order.price"),
-                                textDirection: TextDirection.ltr,
-                                maxLines: 1
-                              )
-                            : AutoSizeText(
-                                FlutterI18n.translate(context, "tr.order.ship"),
-                                textDirection: TextDirection.ltr,
-                                maxLines: 1
-                              ),
+                            child: AutoSizeText(
+                                  bodyListMap[status] ?? '',
+                                )
                           ),
                           const Spacer(
                             flex: 4,
@@ -237,7 +242,7 @@ class SmallCard extends ConsumerWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                for (int i = 0; i < products.length; i++)
+                for (int i = 0; i < bodyList.length; i++)
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Row(
@@ -262,7 +267,7 @@ class SmallCard extends ConsumerWidget {
                                 Expanded(
                                   flex: 10,
                                   child: AutoSizeText(
-                                    products[i].name.toString(),
+                                    bodyList[i].name.toString(),
                                     textDirection: TextDirection.ltr,
                                     maxLines: 1),
                                 ),
@@ -283,7 +288,7 @@ class SmallCard extends ConsumerWidget {
                                 Expanded(
                                   flex: 6,
                                   child: AutoSizeText(
-                                    products[i].amount.toString() + ' adet',
+                                    bodyList[i].amount.toString() + ' adet',
                                     textDirection: TextDirection.ltr,
                                     maxLines: 1
                                   ),
@@ -293,14 +298,15 @@ class SmallCard extends ConsumerWidget {
                                 ),
                                  Expanded(
                                   flex: 3,
-                                  child: (orderStatus == 'order_approved') 
+                                  child: (status == 'order_approved' || className=='proposal' ) 
                                   ? AutoSizeText(
-                                      products[i].price.toString() + ' ₺',
+                                      bodyList[i].price.toString() + ' ₺',
                                       textDirection: TextDirection.ltr,
                                       maxLines: 1
                                    )
                                   : AutoSizeText(
-                                      products[i].amount.toString() + ' adet',
+                                      bodyList[i].amount.toString() + ' adet',
+                                  
                                       textDirection: TextDirection.ltr,
                                       maxLines: 1
                                     ),

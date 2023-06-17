@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '/view/widget/small_card.dart';
@@ -10,8 +10,9 @@ import 'main_page_content.dart';
 class BodyWidget extends StatelessWidget {
   final List<GetOrderlistModel> orderList;
   final String topic;
+  dynamic className;
 
-  const BodyWidget({Key? key, required this.orderList, required this.topic}) : super(key: key);
+  BodyWidget({Key? key, required this.orderList, required this.topic, required this.className}) : super(key: key);
 
   int getCrossAxisCount(BoxConstraints constraints) {
     if (constraints.maxWidth > 1250) {
@@ -67,4 +68,4 @@ class BodyWidget extends StatelessWidget {
       ),
     );
   }
-}
+} */

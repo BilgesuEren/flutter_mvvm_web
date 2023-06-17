@@ -322,24 +322,24 @@ class SmallCard2 extends ConsumerWidget {
   }
 }
 
-FutureOr<void> _dialogBuilder(BuildContext context, id, status, demandName,
-    date, paymentType, demandNo, deliveryDate, paymentDueDate, products) async {
-  debugPrint('Before calling showDialog');
-  await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-            child: BigCard(
-                id: id,
-                status: status,
-                demandName: demandName,
-                date: date,
-                paymentType: paymentType,
-                demandNo: demandNo,
-                deliveryDate: deliveryDate,
-                paymentDueDate: paymentDueDate,
-                products: products));
-      });
-  debugPrint('------context---------$context');
-  debugPrint('------after---------$Dialog');
-}
+// FutureOr<void> _dialogBuilder(BuildContext context, id, status, demandName,
+//     date, paymentType, demandNo, deliveryDate, paymentDueDate, products) async {
+//   debugPrint('Before calling showDialog');
+//   await showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return Dialog(
+//             child: BigCard(
+//                 id: id,
+//                 status: status,
+//                 demandName: demandName,
+//                 date: date,
+//                 paymentType: paymentType,
+//                 demandNo: demandNo,
+//                 deliveryDate: deliveryDate,
+//                 paymentDueDate: paymentDueDate,
+//                 products: products));
+//       });
+//   debugPrint('------context---------$context');
+//   debugPrint('------after---------$Dialog');
+// }

@@ -63,7 +63,7 @@ class proposalView extends ConsumerWidget {
     );
   }
 
-  Padding buildBody(List<GetProposalModel> orderList, BuildContext context, String string) {
+  Padding buildBody(List<GetProposalModel> proposalList, BuildContext context, String string) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: LayoutBuilder(
@@ -82,19 +82,19 @@ class proposalView extends ConsumerWidget {
                   crossAxisCount: getCrossAxisCount(constraints),
                   mainAxisSpacing: 3,
                   crossAxisSpacing: 3,
-                  itemCount: orderList.length,
+                  itemCount: proposalList.length,
                   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
                     return SmallCard2(
                       index: index,
-                      id: orderList[index].proposalId.toString(),
-                      demandNo: orderList[index].proposalId.toString(),  
-                      orderDate: orderList[index].proposalValidDate.toString(),
-                      deliveryDate: orderList[index].deliveryDate.toString(),
-                      paymentDueDate: orderList[index].paymentDueDate.toString(),
-                      orderStatus: orderList[index].proposalState.toString(),
-                      paymentType: orderList[index].paymentType.toString(),
-                      products: orderList[index].productProposals!, 
+                      id: proposalList[index].proposalId.toString(),
+                      demandNo: proposalList[index].proposalId.toString(),  
+                      orderDate: proposalList[index].proposalValidDate.toString(),
+                      deliveryDate: proposalList[index].deliveryDate.toString(),
+                      paymentDueDate: proposalList[index].paymentDueDate.toString(),
+                      orderStatus: proposalList[index].proposalState.toString(),
+                      paymentType: proposalList[index].paymentType.toString(),
+                      products: proposalList[index].productProposals!, 
                     );
                   },
                 ),

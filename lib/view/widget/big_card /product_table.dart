@@ -8,7 +8,7 @@ import '../../../model/get_order_list_model.dart';
 
 
 class ProductListTable extends ConsumerWidget {
-  final List<Product> productList;
+  final List productList;
 
   const ProductListTable({
     super.key, 
