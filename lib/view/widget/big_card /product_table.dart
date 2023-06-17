@@ -19,17 +19,19 @@ class ProductListTable extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return DataTable2(
       columnSpacing: 10,
-      horizontalMargin: 22,
+      // horizontalMargin: 22,
       fixedTopRows: 1,
       dataRowHeight: 25,
       headingRowHeight: 30,
       headingTextStyle: Theme.of(context).textTheme.labelMedium,
       dataTextStyle: Theme.of(context).textTheme.bodySmall,
+      dataRowColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.onPrimary),
+      headingRowColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.outlineVariant),
       // empty: Placeholder(),
       columns: [
         const DataColumn2(
           // fixedWidth: 33,
-          label: AutoSizeText('#', textAlign: TextAlign.start, maxLines: 1, textDirection: TextDirection.ltr),
+          label: AutoSizeText('#', maxLines: 1, textDirection: TextDirection.rtl),
           numeric: true,
           fixedWidth: 20,
         ),
@@ -61,7 +63,7 @@ class ProductListTable extends ConsumerWidget {
             (item) => DataRow2(
               // color: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary),
               cells: [
-              DataCell(AutoSizeText((productList.indexOf(item) + 1).toString())),
+              DataCell(AutoSizeText((productList.indexOf(item) + 1).toString(), textDirection: TextDirection.ltr,)),
               DataCell(AutoSizeText(item.name.toString())),
               DataCell(AutoSizeText(item.description.toString())),
               DataCell(AutoSizeText(item.unit.toString())),

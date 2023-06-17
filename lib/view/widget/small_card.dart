@@ -1,14 +1,12 @@
 import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import '/view/widget/big_card/big_card.dart';
-
 import '../../model/get_order_list_model.dart';
+import 'big_card /big_card.dart';
 
 
 class BoolNotifier extends StateNotifier<bool> {
@@ -93,22 +91,26 @@ class SmallCard extends ConsumerWidget {
           color: Theme.of(context).colorScheme.surfaceVariant,
           child: InkWell(
             onTap: () {
-              // showDialog(
-              //   context: context, 
-              //   builder: ( BuildContext context) => Dialog(
-              //     child: BigCard(
-              //       id: id,
-              //       status: orderStatus,
-              //       demandName: demandName,
-              //       date: orderDate,
-              //       paymentType: paymentType,
-              //       demandNo: demandNo,
-              //       deliveryDate: deliveryDate,
-              //       paymentDueDate: paymentDueDate,
-              //       products: products
-              //     ),
-              //   ),
-              // );              
+              showDialog(
+                context: context, 
+                builder: ( BuildContext context) {
+                  return Consumer(builder: (context, ref, _) {
+                    return Dialog(
+                      child: BigCard(
+                        id: id,
+                        status: orderStatus,
+                        demandName: demandName,
+                        date: orderDate,
+                        paymentType: paymentType,
+                        demandNo: demandNo,
+                        deliveryDate: deliveryDate,
+                        paymentDueDate: paymentDueDate,
+                        products: products
+                      ),
+                    );
+                  },);
+                }
+              );              
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,37 +324,42 @@ class SmallCard extends ConsumerWidget {
     );
   }
 }
-  FutureOr<void> _dialogBuilder(
-    BuildContext context, 
-    id, 
-    status, 
-    demandName,
-    date, 
-    paymentType, 
-    demandNo, 
-    deliveryDate, 
-    paymentDueDate, 
-    products
-  ) async {
-    debugPrint('Before calling showDialog');
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: BigCard(
-            id: id, 
-            status: status, 
-            demandName: demandName,
-            date: date, 
-            paymentType: paymentType, 
-            demandNo: demandNo, 
-            deliveryDate: deliveryDate, 
-            paymentDueDate: paymentDueDate, 
-            products: products
-          )
-        );
-      }
-    );
-    debugPrint('------context---------$context');
-    debugPrint('------after---------$Dialog');
-  }
+
+
+
+
+  // FutureOr<void> _dialogBuilder(
+  //   BuildContext context, 
+  //   id, 
+  //   status, 
+  //   demandName,
+  //   date, 
+  //   paymentType, 
+  //   demandNo, 
+  //   deliveryDate, 
+  //   paymentDueDate, 
+  //   products
+
+  // ) async {
+  //   await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         child: BigCard(
+  //           key: context,
+  //           id: id, 
+  //           status: status, 
+  //           demandName: demandName,
+  //           date: date, 
+  //           paymentType: paymentType, 
+  //           demandNo: demandNo, 
+  //           deliveryDate: deliveryDate, 
+  //           paymentDueDate: paymentDueDate, 
+  //           products: products
+  //         )
+  //       );
+  //     }
+  //   );
+  //   debugPrint('------context---------$context');
+  //   debugPrint('------after---------$Dialog');
+  // }
