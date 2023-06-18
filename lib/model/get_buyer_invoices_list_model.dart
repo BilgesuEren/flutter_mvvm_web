@@ -94,7 +94,13 @@ class Invoice {
         "seller_erp_id": sellerErpId,
         "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toMap())),
     };
-}
+
+  @override
+  String toString() {
+    return 'Invoice(invoiceId: $invoiceId, invoiceNo: $invoiceNo, orderId: $orderId, invoiceDate: $invoiceDate, paymentDate: $paymentDate, paymentType: $paymentType, state: $state, note: $note, dbs: $dbs, priceWithoutVat: $priceWithoutVat, totalTlPrice: $totalTlPrice, sellerName: $sellerName, sellerErpId: $sellerErpId, products: $products)';  
+   }
+
+  }
 
 class Product {
     int? orderId;
@@ -166,4 +172,9 @@ class Product {
         "product_erp_id": productErpId,
         "proposal_note": proposalNote,
     };
+
+  @override
+  String toString() {
+    return 'Product(orderId: $orderId, orderPoNo: $orderPoNo, productsProposalId: $productsProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, shippedAmount: $shippedAmount, unit: $unit, price: $price, currencyCode: $currencyCode, erpId: $erpId, productErpId: $productErpId, proposalNote: $proposalNote)';
+  }  
 }
