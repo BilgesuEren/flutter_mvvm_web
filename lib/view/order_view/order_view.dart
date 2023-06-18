@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../model/get_order_list_model.dart';
+import '../../view_model/buyer_invoices_view_model.dart';
 import '../../view_model/order_list_view_model.dart';
 import '../widget/appbar.dart';
 import '../widget/main_page_content.dart';
@@ -17,6 +18,7 @@ class OrderView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orderListAsyncValue = ref.watch(getOrderListProvider);
+    final ato = ref.watch(getInvoicesProvider);
 
     return orderListAsyncValue.when(
       data: (orderList) {
