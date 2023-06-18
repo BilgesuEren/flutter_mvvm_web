@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_web/view/widget/big_card%20/proposal_table.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'product_table.dart';
-
-import '../../../model/get_order_list_model.dart';
 import 'header.dart';
 import 'info.dart';
 
@@ -10,12 +9,14 @@ class BigCard extends ConsumerWidget {
   final String id; //header_no
   final String className;
   final String status;
+  final String svgPath;
   final String topic; //body_header
   final String date; //header_date info_1
   final String paymentType; //info_2 (column1)
   final String demandNo; //info_3 (column1)
   final String deliveryDate; //info_1 (column2)
   final String paymentDueDate; //info_2 (column2)
+  final String ?statusMap;
   final List tableList; //body_table
 
   const BigCard({
@@ -23,12 +24,14 @@ class BigCard extends ConsumerWidget {
     required this.id,
     required this.className,
     required this.status,
+    required this.svgPath,
     required this.topic,
     required this.date,
     required this.paymentType,
     required this.demandNo,
     required this.deliveryDate,
     required this.paymentDueDate,
+    this.statusMap,
     required this.tableList,
   }) : super(key: key);
 
@@ -37,13 +40,15 @@ class BigCard extends ConsumerWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     const surfaceDim = Color(0xFFD8DBD8);
+
+    Map<String, Widget> tableListMap= {
+      'proposal': ProposalTable(productsProposalList: tableList, className: className),
+      'order': ProductListTable(productList: tableList, className: className),
+    };
+
     final DateTime parsedDate = DateTime.parse(date);
-    // final DateTime parsedDeliveryDate = DateTime.parse(deliveryDate ?? '43.45.456778');
-    //formating dateTime object
-    String formattedDate =
+    String formattedDate =   //formating dateTime object
         "${parsedDate.year}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.day.toString().padLeft(2, '0')}";
-    // String formattedDeliveryDate =
-    //   "${parsedDate.year}-${parsedDeliveryDate.month.toString().padLeft(2, '0')}-${parsedDeliveryDate.day.toString().padLeft(2, '0')}";
     return Card(
       elevation: 3,
       color: surfaceDim,
@@ -54,7 +59,7 @@ class BigCard extends ConsumerWidget {
         constraints: BoxConstraints.tightFor(width: width * 0.7, height: height * 0.8),
         child: Column(
           children: [
-            Header(id: id, status: status),  // header sonu
+            Header(id: id, statusMap: statusMap ?? '-', svgPath: svgPath),  // header sonu
             Expanded(
               flex: 10,                    //body
               child: Row(
@@ -75,8 +80,7 @@ class BigCard extends ConsumerWidget {
                             deliveryDate: deliveryDate,
                             paymentDueDate: paymentDueDate,                        
                           ),
-                        ),  //info
-        
+                        ),  //info        
                         Flexible(
                           flex: 4,
                           fit: FlexFit.loose,
@@ -88,7 +92,7 @@ class BigCard extends ConsumerWidget {
                                 borderRadius:  BorderRadius.all(Radius.circular(10)),
                               ),
                               // 
-                              child: ProductListTable(productList: tableList),
+                              child: tableListMap[className],
                             ),
                           ),
                         ),
@@ -120,7 +124,7 @@ class BigCard extends ConsumerWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Align(
                                 alignment: (id == "receiver"?Alignment.topLeft:Alignment.topRight),
                                 child: Container(
@@ -128,8 +132,8 @@ class BigCard extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(20),
                                     color: ( topic.isEmpty ? Colors.grey.shade200 :Colors.blue[200]),
                                   ),
-                                  padding: EdgeInsets.all(16),
-                                  child: Text(topic, style: TextStyle(fontSize: 15),),
+                                  padding: const  EdgeInsets.all(16),
+                                  child: Text(topic, style: const TextStyle(fontSize: 15),),
                                 ),
                               ),
                             ),

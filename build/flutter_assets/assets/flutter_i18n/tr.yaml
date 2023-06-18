@@ -45,4 +45,5 @@ tr:
     product: "Ürün"
     amount: "Miktar"
     price: "Fiyat"
+    proposal_note: "Tedarikci Notu"
 

@@ -29,7 +29,7 @@ class proposalView extends ConsumerWidget {
               return Scaffold(
                 drawer: const Drawer(child: NavigationRailDrawer()),
                 appBar: AppbarTop(), //appbar
-                body: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders")),
+                body: buildBody(orderList, context, FlutterI18n.translate(context, "tr.proposal.proposals"), 'proposal'),
               );
             } else {
               return Scaffold(
@@ -43,7 +43,7 @@ class proposalView extends ConsumerWidget {
                       ),
                       Expanded(
                         flex: 9,
-                        child: buildBody(orderList, context, FlutterI18n.translate(context, "tr.order.orders")), //order screen body
+                        child: buildBody(orderList, context, FlutterI18n.translate(context, "tr.proposal.proposals"), 'proposal'), //order screen body
                       ),
                     ],
                   ),
@@ -63,7 +63,7 @@ class proposalView extends ConsumerWidget {
     );
   }
 
-  Padding buildBody(List<GetProposalModel> proposalList, BuildContext context, String string) {
+  Padding buildBody(List<GetProposalModel> proposalList, BuildContext context, String topic, String className) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: LayoutBuilder(
@@ -74,7 +74,7 @@ class proposalView extends ConsumerWidget {
               Visibility(
                 visible: constraints.maxHeight > 300,
                 child: allMainPageContent(
-                  topic: 'Siparişler',
+                  topic: topic,
                 ),
               ),
               Flexible(
@@ -87,7 +87,7 @@ class proposalView extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return SmallCard(
                       index: index,
-                      className: 'proposal',
+                      className: className,
                       id: proposalList[index].proposalId.toString(),
                       status: proposalList[index].proposalState.toString(),
                       bodyHeader: proposalList[index].supplierCompany.toString(),

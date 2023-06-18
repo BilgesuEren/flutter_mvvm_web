@@ -7,16 +7,51 @@ import 'package:data_table_2/data_table_2.dart';
 import '../../../model/get_order_list_model.dart';
 
 
-class ProductListTable extends ConsumerWidget {
+class ProductListTable extends StatelessWidget {
   final List productList;
+  final String className;
 
   const ProductListTable({
     super.key, 
-    required this.productList
+    required this.productList,
+    required this.className
     });
 
+
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    Map<String, String> description= {
+      'order': FlutterI18n.translate(context, "tr.order.description"),
+      'proposal': FlutterI18n.translate(context, "tr.proposal.proposal_note"),
+    };
+
+    //     dynamic name;
+    // dynamic description;
+    // dynamic unit;
+    // dynamic productName;
+    // dynamic proposalNote;
+    // dynamic productUnit;
+
+    // Map<String, dynamic> row_1= {
+    //   'order': name,
+    //   'proposal': productName,
+    // };
+
+    // Map<String, dynamic> row_2= {
+    //   'order': description,
+    //   'proposal': proposalNote,
+    // };
+    // Map<String, dynamic> row_3= {
+    //   'order': unit,
+    //   'proposal': productUnit,
+    // };
+
+    debugPrint('productListTable: ${productList.toString()}');
+    
+    
+  
+
     return DataTable2(
       columnSpacing: 10,
       // horizontalMargin: 22,
@@ -40,7 +75,7 @@ class ProductListTable extends ConsumerWidget {
           size: ColumnSize.S,
         ),
         DataColumn2(
-          label: AutoSizeText(FlutterI18n.translate(context, "tr.order.description")),
+          label: AutoSizeText(description[className] ?? ' '),  //tedarikci nocu
           size: ColumnSize.M,
         ),
         DataColumn2(
@@ -64,9 +99,9 @@ class ProductListTable extends ConsumerWidget {
               // color: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary),
               cells: [
               DataCell(AutoSizeText((productList.indexOf(item) + 1).toString(), textDirection: TextDirection.ltr,)),
-              DataCell(AutoSizeText(item.name.toString())),
-              DataCell(AutoSizeText(item.description.toString())),
-              DataCell(AutoSizeText(item.unit.toString())),
+              DataCell(AutoSizeText(item.name.toString())), //product_name
+              DataCell(AutoSizeText(item.description.toString())), //propsal_note
+              DataCell(AutoSizeText(item.unit.toString())), //product_unit
               DataCell(AutoSizeText(item.price.toString())),
               DataCell(AutoSizeText(item.amount.toString(), textAlign: TextAlign.left)),
               // DataCell(Text('')),

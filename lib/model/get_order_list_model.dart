@@ -100,6 +100,12 @@ class GetOrderlistModel {
         "approvers": List<dynamic>.from(approvers!.map((x) => x.toMap())),
         "products": List<dynamic>.from(products!.map((x) => x.toMap())),
     };
+
+
+  @override
+  String toString() {
+    return 'GetOrderListModel{id: $id, proposalId: $proposalId, companyId: $companyId, supplier: $supplier, supplierErpId: $supplierErpId, supplierTaxId: $supplierTaxId, state: $state, deliveryDate: $deliveryDate, paymentDueDate: $paymentDueDate, paymentType: $paymentType, orderDate: $orderDate, demandName: $demandName, demandNo: $demandNo, demandCreatorName: $demandCreatorName, demandCreatorEmail: $demandCreatorEmail, procurementName: $procurementName, procurementEmail: $procurementEmail, costCenterName: $costCenterName, costCenterErpId: $costCenterErpId, approvers: $approvers, products: $products}';
+  }  
 }
 
 class Approver {
@@ -192,5 +198,10 @@ class Product {
         "product_erp_id": productErpId,
         "proposal_note": proposalNote,
     };
+
+  @override
+  String toString() {
+    return 'Product{productProposalId: $productProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, amount: $amount, unit: $unit, price: $price, currencyCode: $currencyCode, erpId: $erpId, productErpId: $productErpId, proposalNote: $proposalNote}';
+  }
 }
 

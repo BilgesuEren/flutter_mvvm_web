@@ -154,7 +154,7 @@ class ProductProposal {
 
   @override
   String toString() {
-    return 'ProductProposal(productProposalId: $productProposalId, productName: $productName, price: $price)';
+    return 'ProductProposal(productProposalId: $productProposalId, productName: $productName, price: $price, url: $url, description: $description, productId: $productId, status: $status, updateCount: $updateCount, equivalentId: $equivalentId, proposalNote: $proposalNote, taxRate: $taxRate, currencyCode: $currencyCode, amount: $amount)';
   }
 
   factory ProductProposal.fromJson(String str) =>

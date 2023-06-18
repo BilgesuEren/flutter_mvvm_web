@@ -5,59 +5,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 
-
-const String pendingSvg = 'assets/pending2.svg';
-const String orderApprovedSvg = 'assets/exportNotes.svg';
-const String orderConfirmedSvg = 'assets/conveyor.svg';
-const String orderPrepared = 'assets/trolley.svg';
-const String orderOnTheWay = 'assets/shipment.svg';
-const String orderDelivered = 'assets/warehouse.svg';
-const String newMessage = 'assets/newMessage.svg';
-const String exportNotes = 'assets/exportNotes.svg';
-
 class Header extends ConsumerWidget {
   final String id;
-  final String status;
+  final String statusMap;
+  final String svgPath;
 
   const Header({
     Key? key,
     required this.id,
-    required this.status,
+    required this.statusMap,
+    required this.svgPath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const surfaceDim = Color(0xFFD8DBD8);
-    // same method in small_card. refactor later
-     Map<String, String> orderStatusMap = {
-      'pending': FlutterI18n.translate(context, "tr.order.pending"),
-      'order_approved': FlutterI18n.translate(context, "tr.order.order_approved"),
-      'order_confirmed': FlutterI18n.translate(context, "tr.order.order_confirmed"),
-      'order_prepared' : FlutterI18n.translate(context, "tr.order.order_prepared"),
-      'order_on_the_way' : FlutterI18n.translate(context, "tr.order.order_on_the_way"),
-      'order_delivered' : FlutterI18n.translate(context, "tr.order.order_delivered"),
-    };
-
-    Map<String, String> statusIconMap = {
-      'pending': pendingSvg,
-      'order_approved': orderApprovedSvg,
-      'order_confirmed': orderConfirmedSvg,
-      'order_prepared': orderPrepared,
-      'order_on_the_way': orderOnTheWay,
-      'order_delivered': orderDelivered
-    };
     return Container(
       // padding: EdgeInsets.all(10.0),
       constraints: BoxConstraints.tightFor(height: 80.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(15.0),
         topRight: Radius.circular(15.0),
         ),
         color: Theme.of(context).colorScheme.surfaceVariant,
       ),
-
-
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,11 +37,11 @@ class Header extends ConsumerWidget {
           Expanded(
             flex: 9,
             child: ListTile(
-              title: Text(orderStatusMap[status] ?? '',
+              title: Text(statusMap,
               style: Theme.of(context).textTheme.titleLarge),
               subtitle: AutoSizeText("${FlutterI18n.translate(context, "tr.order.order_no")}:  $id", style: Theme.of(context).textTheme.titleMedium),
               leading: SvgPicture.asset(
-                statusIconMap[status] ?? '',
+                svgPath,
                 semanticsLabel: 'Order Status Icon',
                 width: 30.0,
                 height: 30.0,

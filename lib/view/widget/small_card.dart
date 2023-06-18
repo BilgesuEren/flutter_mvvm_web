@@ -118,27 +118,30 @@ class SmallCard extends ConsumerWidget {
           color: Theme.of(context).colorScheme.surfaceVariant,
           child: InkWell(
             onTap: () {
-              /* showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Consumer(
-                      builder: (context, ref, _) {
-                        return Dialog(
-                          child: BigCard(
-                              id: id,
-                              className: className,
-                              status: status,
-                              topic: bodyHeader,
-                              date: headerDate,
-                              paymentType: paymentType,
-                              demandNo: demandNo,
-                              deliveryDate: deliveryDate,
-                              paymentDueDate: paymentDueDate,
-                              tableList: bodyList),
-                        );
-                      },
-                    );
-                  }); */
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Consumer(
+                    builder: (context, ref, _) {
+                      return Dialog(
+                        child: BigCard(
+                            id: id,
+                            className: className,
+                            status: status,
+                            svgPath: statusIconMap[status] ?? '',
+                            topic: bodyHeader,
+                            date: headerDate,
+                            paymentType: paymentType,
+                            demandNo: demandNo,
+                            deliveryDate: deliveryDate,
+                            paymentDueDate: paymentDueDate,
+                            statusMap: orderStatusMap[status],
+
+                            tableList: bodyList),
+                      );
+                    },
+                  );
+                }); 
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
