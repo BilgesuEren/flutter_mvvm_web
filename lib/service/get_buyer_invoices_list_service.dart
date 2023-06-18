@@ -7,7 +7,7 @@ import '../storage/jwt_storage.dart';
 
 class getInvoicesService {
   static const String _url =
-      'https://test.satta.biz/api/v1/buyer_invoice_list.json?state="invoice_approved","invoice_pending"&saved_to_erp=false';
+      'https://test.satta.biz/api/v1/buyer_invoice_list.json?state="invoice_discounted","invoice_paid","invoice_pending","invoice_approved_dbs"&saved_to_erp=false';
 
   final Dio _dio = Dio();
 
@@ -29,9 +29,9 @@ class getInvoicesService {
 
 
 
-      debugPrint('bbbbbbbbbbbbbb${response.data['status'].toString()}');
+      /* debugPrint('bbbbbbbbbbbbbb${response.data['status'].toString()}');
       debugPrint('bbbbbbbbbbbbbbbbbb${response.data['invoices'].toString()}');
-      debugPrint('bbbbbbbbbbbbbbbbb${response.data.toString()}');
+      debugPrint('bbbbbbbbbbbbbbbbb${response.data.toString()}'); */
 
       if (response.statusCode != 200) {
         throw DioError(
@@ -39,7 +39,7 @@ class getInvoicesService {
             error: 'HTTP status error: ${response.statusCode}');
       }
 
-      List data = response.data['order'];
+      List data = response.data['invoices'];
       data.forEach((element) {
         GetInvoicesModel getOrderlistModel =
             GetInvoicesModel.fromMap(element);

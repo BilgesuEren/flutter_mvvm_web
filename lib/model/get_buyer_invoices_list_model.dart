@@ -1,3 +1,5 @@
+
+
 // To parse this JSON data, do
 //
 //     final getInvoicesModel = getInvoicesModelFromMap(jsonString);
@@ -5,26 +7,6 @@
 import 'dart:convert';
 
 class GetInvoicesModel {
-    List<Invoice>? invoices;
-
-    GetInvoicesModel({
-        this.invoices,
-    });
-
-    factory GetInvoicesModel.fromJson(String str) => GetInvoicesModel.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory GetInvoicesModel.fromMap(Map<String, dynamic> json) => GetInvoicesModel(
-        invoices: json["invoices"] == null ? [] : List<Invoice>.from(json["invoices"]!.map((x) => Invoice.fromMap(x))),
-    );
-
-    Map<String, dynamic> toMap() => {
-        "invoices": invoices == null ? [] : List<dynamic>.from(invoices!.map((x) => x.toMap())),
-    };
-}
-
-class Invoice {
     int? invoiceId;
     String? invoiceNo;
     int ?orderId;
@@ -39,8 +21,7 @@ class Invoice {
     String? sellerName;
     String ?sellerErpId;
     List<Product>? products;
-
-    Invoice({
+    GetInvoicesModel({
         this.invoiceId,
         this.invoiceNo,
         this.orderId,
@@ -57,16 +38,16 @@ class Invoice {
         this.products,
     });
 
-    factory Invoice.fromJson(String str) => Invoice.fromMap(json.decode(str));
+    factory GetInvoicesModel.fromJson(String str) => GetInvoicesModel.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Invoice.fromMap(Map<String, dynamic> json) => Invoice(
+    factory GetInvoicesModel.fromMap(Map<String, dynamic> json) => GetInvoicesModel(
         invoiceId: json["invoice_id"],
         invoiceNo: json["invoice_no"],
         orderId: json["order_id"],
         invoiceDate: json["invoice_date"] == null ? null : DateTime.parse(json["invoice_date"]),
-        paymentDate: json["payment_date"],
+        paymentDate: json["payment_date"] == null ? null : DateTime.parse(json["payment_date"]),
         paymentType: json["payment_type"],
         state: json["state"],
         note: json["note"],
@@ -94,13 +75,11 @@ class Invoice {
         "seller_erp_id": sellerErpId,
         "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toMap())),
     };
-
   @override
   String toString() {
     return 'Invoice(invoiceId: $invoiceId, invoiceNo: $invoiceNo, orderId: $orderId, invoiceDate: $invoiceDate, paymentDate: $paymentDate, paymentType: $paymentType, state: $state, note: $note, dbs: $dbs, priceWithoutVat: $priceWithoutVat, totalTlPrice: $totalTlPrice, sellerName: $sellerName, sellerErpId: $sellerErpId, products: $products)';  
    }
-
-  }
+}
 
 class Product {
     int? orderId;
@@ -110,9 +89,9 @@ class Product {
     int? categoryId;
     String ?categoryErpId;
     String? description;
-    int? shippedAmount;
+    double? shippedAmount;
     String? unit;
-    int? price;
+    double? price;
     String? currencyCode;
     String ?erpId;
     String ?productErpId;
@@ -176,5 +155,5 @@ class Product {
   @override
   String toString() {
     return 'Product(orderId: $orderId, orderPoNo: $orderPoNo, productsProposalId: $productsProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, shippedAmount: $shippedAmount, unit: $unit, price: $price, currencyCode: $currencyCode, erpId: $erpId, productErpId: $productErpId, proposalNote: $proposalNote)';
-  }  
+  }    
 }

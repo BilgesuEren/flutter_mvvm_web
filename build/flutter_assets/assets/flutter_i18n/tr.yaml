@@ -46,4 +46,12 @@ tr:
     amount: "Miktar"
     price: "Fiyat"
     proposal_note: "Tedarikci Notu"
+  invoice:
+    invoices: "Faturalar"
+    invoice_paid: "Ödendi"
+    invoice_discounted: 'Ödeniyor'
+    invoice_approved_dbs: "DBS Fatura"
+    invoice_pending: "Onay Bekliyor"
+    price: "Fiyat"
+    invoice_date: 'Fatura Tarihi'
 

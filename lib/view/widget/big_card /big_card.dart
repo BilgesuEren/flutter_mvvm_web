@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_web/view/widget/big_card%20/proposal_table.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'info_invoice.dart';
+import 'invoice_table.dart';
 import 'product_table.dart';
 import 'header.dart';
 import 'info.dart';
@@ -14,8 +16,8 @@ class BigCard extends ConsumerWidget {
   final String date; //header_date info_1
   final String paymentType; //info_2 (column1)
   final String demandNo; //info_3 (column1)
-  final String deliveryDate; //info_1 (column2)
-  final String paymentDueDate; //info_2 (column2)
+  final String ?deliveryDate; //info_1 (column2)
+  final String ?paymentDueDate; //info_2 (column2)
   final String ?statusMap;
   final List tableList; //body_table
 
@@ -29,8 +31,8 @@ class BigCard extends ConsumerWidget {
     required this.date,
     required this.paymentType,
     required this.demandNo,
-    required this.deliveryDate,
-    required this.paymentDueDate,
+    this.deliveryDate,
+    this.paymentDueDate,
     this.statusMap,
     required this.tableList,
   }) : super(key: key);
@@ -44,6 +46,7 @@ class BigCard extends ConsumerWidget {
     Map<String, Widget> tableListMap= {
       'proposal': ProposalTable(productsProposalList: tableList, className: className),
       'order': ProductListTable(productList: tableList, className: className),
+      'invoice': InvoiceTable(invoiceProductList: tableList, className: className),
     };
 
     final DateTime parsedDate = DateTime.parse(date);
@@ -72,14 +75,23 @@ class BigCard extends ConsumerWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 60.0),
-                          child: Info(
+                          child: 
+                          className == 'invoice'
+                          ? Info(
                             demandName: topic,
                             orderDate: formattedDate,
                             paymentType: paymentType,
                             demandNo: demandNo,
                             deliveryDate: deliveryDate,
-                            paymentDueDate: paymentDueDate,                        
-                          ),
+                            paymentDueDate: paymentDueDate,                       
+                          )
+                         : InfoInvoice(
+                            invoiceNo: id,
+                            orderDate: formattedDate,
+                            paymentType: paymentType,
+                            demandNo: demandNo,
+                            className: className,
+                         ),
                         ),  //info        
                         Flexible(
                           flex: 4,

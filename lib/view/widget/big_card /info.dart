@@ -9,18 +9,18 @@ class Info extends ConsumerWidget {
   final String orderDate;
   final dynamic paymentType;
   final String demandNo;
-  final String deliveryDate;
-  final String paymentDueDate;
+  final String ?deliveryDate;
+  final String ?paymentDueDate;
 
 
   const Info({
     Key? key,
-    required this.demandName,
+    required this.demandName,  //invoice'da gib fatura no yollacanacak
     required this.orderDate,
     required this.paymentType,
     required this.demandNo,
-    required this.deliveryDate,
-    required this.paymentDueDate,
+    this.deliveryDate,
+    this.paymentDueDate,
   }) : super(key: key);
 
   @override
@@ -33,10 +33,9 @@ class Info extends ConsumerWidget {
         children: [
           Row(     //row 1
             children:  [
-              AutoSizeText(
-                FlutterI18n.translate(context, "tr.order.topic"),
-                  style: Theme.of(context).textTheme.titleSmall,
-                  maxLines: 1,                        
+              AutoSizeText( FlutterI18n.translate(context, "tr.order.topic"),
+                style: Theme.of(context).textTheme.titleSmall,
+                maxLines: 1,                        
                 ),
               const SizedBox(width: 10.0),
               AutoSizeText(
@@ -76,7 +75,7 @@ class Info extends ConsumerWidget {
                     maxLines: 1,                        
                   ), 
                   AutoSizeText(
-                    deliveryDate,
+                    deliveryDate ?? '-',
                     style: Theme.of(context).textTheme.bodySmall,
                     overflow: TextOverflow.fade,
                     maxLines: 1,
@@ -103,7 +102,7 @@ class Info extends ConsumerWidget {
                     maxLines: 1,                                     
                     ), 
                   Text(
-                    paymentDueDate,
+                    paymentDueDate ?? '-',
                     style: Theme.of(context).textTheme.bodySmall,
                     maxLines: 1,                                     
                     ),            
