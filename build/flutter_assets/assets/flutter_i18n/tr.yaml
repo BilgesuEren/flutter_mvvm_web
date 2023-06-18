@@ -19,7 +19,7 @@ tr:
     order_prepared: "Sevke Hazır"
     order_on_the_way: "Yolda"
     order_delivered: "Teslim Edildi"
-    no: "No:"
+    no: "No: "
     order_date:  "Sipariş Tarihi:"
     product: "Ürün"
     order: "Sipariş"
@@ -41,7 +41,7 @@ tr:
     pending: "Teklif Istendi"
     replied: "Teklif verildi"
     proposal_stvs: "Teklif Verildi"
-    no: "No:"
+    no: "No: "
     product: "Ürün"
     amount: "Miktar"
     price: "Fiyat"
@@ -53,5 +53,5 @@ tr:
     invoice_approved_dbs: "DBS Fatura"
     invoice_pending: "Onay Bekliyor"
     price: "Fiyat"
-    invoice_date: 'Fatura Tarihi'
+    invoice_date: 'Fatura Tarihi: '
 
