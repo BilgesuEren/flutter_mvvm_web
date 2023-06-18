@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/get_buyer_invoices_list_model.dart';
@@ -10,6 +11,7 @@ final getInvoicesProvider = FutureProvider<List<GetInvoicesModel>>((ref) async {
   final _invoiceslistservice = getInvoicesService();
   try {
     List<GetInvoicesModel> _orderList = await _invoiceslistservice.getInvoicesListData();
+    debugPrint(_orderList.toString());
     return _orderList;
   } catch (e) {
     if (e is DioException) {
