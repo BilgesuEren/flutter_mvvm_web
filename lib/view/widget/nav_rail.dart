@@ -18,8 +18,14 @@ class _NavigationRailDrawerState extends State<NavigationRailDrawer> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Herhangi bir navigasyon değişikliği olduğunda 'currentIndex' güncellenir.
-    currentIndex =
-        ModalRoute.of(context)!.settings.name == '/proposalScreen' ? 0 : 1;
+    final routeName = ModalRoute.of(context)!.settings.name;
+    if (routeName == '/proposalScreen') {
+      currentIndex = 0;
+    } else if (routeName == '/orderScreen') {
+      currentIndex = 1;
+    } else if (routeName == '/invoiceScreen') {
+      currentIndex = 2;
+    }
   }
 
   @override
@@ -63,21 +69,21 @@ class _NavigationRailDrawerState extends State<NavigationRailDrawer> {
             const SizedBox(
               height: 16,
             ),
-            drawerButton(context, 'Siparişler', 'assets/order.svg',
-                '/orderScreen', 1),
+            drawerButton(
+                context, 'Siparişler', 'assets/order.svg', '/orderScreen', 1),
             const SizedBox(
               height: 16,
             ),
             drawerButton(context, 'Faturalar', 'assets/invoice.svg',
-                '/invoiceScreen', 1),
+                '/invoiceScreen', 2),
           ],
         ),
       ),
     );
   }
 
-  drawerButton(BuildContext context, String text, String icon, String route,
-      int index) {
+  drawerButton(
+      BuildContext context, String text, String icon, String route, int index) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return InkWell(
@@ -104,11 +110,11 @@ class _NavigationRailDrawerState extends State<NavigationRailDrawer> {
             ),
             Flexible(
               child: SvgPicture.asset(
-                                icon,
-                                semanticsLabel: 'Order Status Icon',
-                                width: 30.0,
-                                height: 30.0,
-                              ),
+                icon,
+                semanticsLabel: 'Order Status Icon',
+                width: 30.0,
+                height: 30.0,
+              ),
             ),
             const SizedBox(
               width: 10,
