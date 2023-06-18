@@ -5,7 +5,7 @@ import '../model/get_proposals_by_state.dart';
 import '../service/get_proposal_by_state_service.dart';
 
 final proposalListview = FutureProvider<List<GetProposalModel>>((ref) async {
-  final orderlistservice = getProposalListService();
+  final orderlistservice = GetProposalListService();
   List<GetProposalModel> proposaList = [];
 
   try {

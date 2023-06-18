@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import '../model/get_order_list_model.dart';
 import '../storage/jwt_storage.dart';
 
-
 class getOrderlistService {
   static const String _url =
-      "https://test.satta.biz/api/v1/order_list.json?state='order_approved'&with_po=1";
+      "https://test.satta.biz/api/v1/order_list.json?state='order_approved','order_confirmed'";
 
   final Dio _dio = Dio();
 

@@ -85,16 +85,18 @@ class proposalView extends ConsumerWidget {
                   itemCount: proposalList.length,
                   staggeredTileBuilder: (index) => StaggeredTile.fit(1),
                   itemBuilder: (context, index) {
-                    return SmallCard2(
+                    return SmallCard(
                       index: index,
+                      className: 'proposal',
                       id: proposalList[index].proposalId.toString(),
+                      status: proposalList[index].proposalState.toString(),
+                      bodyHeader: proposalList[index].supplierCompany.toString(),
+                      headerDate: proposalList[index].proposalValidDate.toString(),
+                      paymentType: proposalList[index].paymentType.toString(),
                       demandNo: proposalList[index].proposalId.toString(),  
-                      orderDate: proposalList[index].proposalValidDate.toString(),
                       deliveryDate: proposalList[index].deliveryDate.toString(),
                       paymentDueDate: proposalList[index].paymentDueDate.toString(),
-                      orderStatus: proposalList[index].proposalState.toString(),
-                      paymentType: proposalList[index].paymentType.toString(),
-                      products: proposalList[index].productProposals!, 
+                      bodyList: proposalList[index].productProposals!, 
                     );
                   },
                 ),

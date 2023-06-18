@@ -37,6 +37,7 @@ tr:
     total: "Tutar"
     expiry: "Vade:"
   proposal:
+    proposals: "Teklifler"
     pending: "Teklif Istendi"
     replied: "Teklif verildi"
     proposal_stvs: "Teklif Verildi"

@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 class GetOrderlistModel {
@@ -23,7 +22,7 @@ class GetOrderlistModel {
         this.costCenterName,
         this.costCenterErpId,
         this.approvers,
-        required this.products,
+        this.products,
     });
 
     int ?id;
@@ -46,7 +45,7 @@ class GetOrderlistModel {
     String ?costCenterName;
     String ?costCenterErpId;
     List<Approver> ?approvers;
-    List<Product> products;
+    List<Product> ?products;
 
     factory GetOrderlistModel.fromJson(String str) => GetOrderlistModel.fromMap(json.decode(str));
 
@@ -99,14 +98,8 @@ class GetOrderlistModel {
         "cost_center_name": costCenterName,
         "cost_center_erp_id": costCenterErpId,
         "approvers": List<dynamic>.from(approvers!.map((x) => x.toMap())),
-        "products": List<dynamic>.from(products.map((x) => x.toMap())),
+        "products": List<dynamic>.from(products!.map((x) => x.toMap())),
     };
-
-
-  @override
-  String toString() {
-    return 'GetOrderlistModel{id: $id, proposalId: $proposalId, companyId: $companyId, supplier: $supplier, supplierErpId: $supplierErpId, supplierTaxId: $supplierTaxId, state: $state, deliveryDate: $deliveryDate, paymentDueDate: $paymentDueDate, paymentType: $paymentType, orderDate: $orderDate, demandName: $demandName, demandNo: $demandNo, demandCreatorName: $demandCreatorName, demandCreatorEmail: $demandCreatorEmail, procurementName: $procurementName, procurementEmail: $procurementEmail, costCenterName: $costCenterName, costCenterErpId: $costCenterErpId, approvers: $approvers, products: $products}';
-  }
 }
 
 class Approver {
@@ -135,10 +128,6 @@ class Approver {
         "approver_email": approverEmail,
         "approval_date": approvalDate!.toIso8601String(),
     };
-  @override
-  String toString() {
-    return 'Approver{approver_name: $approverName, approver_email: $approverEmail, approval_date: $approvalDate}';
-  }
 }
 
 class Product {
@@ -160,11 +149,11 @@ class Product {
     int ?productProposalId;
     String ?name;
     int ?categoryId;
-    dynamic categoryErpId;
+    dynamic ?categoryErpId;
     String ?description;
-    int ?amount;
+    double ?amount;
     String ?unit;
-    int ?price;
+    double ?price;
     String ?currencyCode;
     dynamic erpId;
     dynamic productErpId;
@@ -180,9 +169,9 @@ class Product {
         categoryId: json["category_id"],
         categoryErpId: json["category_erp_id"],
         description: json["description"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         unit: json["unit"],
-        price: json["price"],
+        price: json["price"].toDouble(),
         currencyCode: json["currency_code"],
         erpId: json["erp_id"],
         productErpId: json["product_erp_id"],
@@ -203,9 +192,5 @@ class Product {
         "product_erp_id": productErpId,
         "proposal_note": proposalNote,
     };
-
-  @override
-  String toString() {
-    return 'Product{product_proposal_id: $productProposalId, name: $name, category_id: $categoryId, category_erp_id: $categoryErpId, description: $description, amount: $amount, unit: $unit, price: $price, currency_code: $currencyCode, erp_id: $erpId, product_erp_id: $productErpId, proposal_note: $proposalNote}';
-  }
 }
+
