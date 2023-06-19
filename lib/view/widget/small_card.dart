@@ -1,12 +1,9 @@
-import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:timer_count_down/timer_count_down.dart';
-import '../../model/get_order_list_model.dart';
+import '../../utils/widget_helper.dart';
 import 'big_card /big_card.dart';
 import 'countdown_date.dart';
 
@@ -59,6 +56,20 @@ class SmallCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    Map<String, String> bodyListMap = {
+      'pending': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_approved': FlutterI18n.translate(context, "tr.order.price"),
+      'order_confirmed': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_prepared': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_on_the_way': FlutterI18n.translate(context, "tr.order.ship"),
+      'order_delivered': FlutterI18n.translate(context, "tr.order.ship"),
+      'invoice_paid': FlutterI18n.translate(context, "tr.invoice.price"),
+      'invoice_discounted': FlutterI18n.translate(context, "tr.invoice.price"),
+      'invoice_approved_dbs': FlutterI18n.translate(context, "tr.invoice.price"),
+      'invoice_pending': FlutterI18n.translate(context, "tr.invoice.price"),
+    };
+
     Map<String, String> orderStatusMap = {
       'pending': FlutterI18n.translate(context, "tr.proposal.pending"),
       'replied': FlutterI18n.translate(context, "tr.proposal.replied"),
@@ -81,40 +92,6 @@ class SmallCard extends ConsumerWidget {
       'invoice_pending':
           FlutterI18n.translate(context, "tr.invoice.invoice_pending"),
     };
-    // Map<String, Widget> bilge = {
-    //   'order': ,
-    //   'proposal':
-    // };
-
-    Map<String, String> bodyListMap = {
-      'pending': FlutterI18n.translate(context, "tr.order.ship"),
-      'order_approved': FlutterI18n.translate(context, "tr.order.price"),
-      'order_confirmed': FlutterI18n.translate(context, "tr.order.ship"),
-      'order_prepared': FlutterI18n.translate(context, "tr.order.ship"),
-      'order_on_the_way': FlutterI18n.translate(context, "tr.order.ship"),
-      'order_delivered': FlutterI18n.translate(context, "tr.order.ship"),
-      'invoice_paid': FlutterI18n.translate(context, "tr.invoice.price"),
-      'invoice_discounted': FlutterI18n.translate(context, "tr.invoice.price"),
-      'invoice_approved_dbs':
-          FlutterI18n.translate(context, "tr.invoice.price"),
-      'invoice_pending': FlutterI18n.translate(context, "tr.invoice.price"),
-    };
-    Map<String, String> statusIconMap = {
-      'pending': 'assets/pending2.svg',
-      'replied': 'assets/exportNotes.svg',
-      'proposal_stvs': 'assets/exportNotes.svg',
-      // 'order_pending': 'assets/exportNotes.svg',
-      'order_approved': 'assets/exportNotes.svg',
-      'order_confirmed': 'assets/conveyor.svg',
-      'order_prepared': 'assets/trolley.svg',
-      'order_on_the_way': 'assets/shipment.svg',
-      'order_delivered': 'assets/warehouse.svg',
-      'invoice_paid': 'assets/paid.svg',
-      'invoice_discounted': 'assets/paymentProcess.svg',
-      'invoice_approved_dbs': 'assets/DBS.svg',
-      'invoice_pending': 'assets/pending.svg',
-    };
-
 
     DateTime parsedDate = DateTime.parse(headerDate);
     String formattedDate =
@@ -133,6 +110,8 @@ class SmallCard extends ConsumerWidget {
       'invoice': const SizedBox(width: 1,),
     };
 
+    const surfaceDim = Color(0xFFD8DBD8);
+
     return Padding(
       padding: const EdgeInsets.only(right: 15, bottom: 15),
       child: Card(
@@ -141,36 +120,37 @@ class SmallCard extends ConsumerWidget {
           child: InkWell(
             onTap: () {
               showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Consumer(
-                      builder: (context, ref, _) {
-                        return Dialog(
-                          child: BigCard(
-                              id: id,
-                              className: className,
-                              status: status,
-                              svgPath: statusIconMap[status] ?? '',
-                              topic: bodyHeader,
-                              date: headerDate,
-                              paymentType: paymentType,
-                              demandNo: demandNo,
-                              deliveryDate: deliveryDate,
-                              paymentDueDate: paymentDueDate,
-                              statusMap: orderStatusMap[status],
-                              tableList: bodyList),
-                        );
-                      },
-                    );
-                  });
+                context: context,
+                builder: (BuildContext context) {
+                  return Consumer(
+                    builder: (context, ref, _) {
+                      return Dialog(
+                        child: BigCard(
+                            id: id,
+                            className: className,
+                            status: status,
+                            svgPath: statusIconMap[status] ?? '',
+                            topic: bodyHeader,
+                            date: headerDate,
+                            paymentType: paymentType,
+                            demandNo: demandNo,
+                            deliveryDate: deliveryDate,
+                            paymentDueDate: paymentDueDate,
+                            statusMap: orderStatusMap[status],
+                            tableList: bodyList),
+                      );
+                    },
+                  );
+                }
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                      color: surfaceDim,
+                      borderRadius:  BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10))),
                   child: Padding(
@@ -194,7 +174,7 @@ class SmallCard extends ConsumerWidget {
                                 child: AutoSizeText(
                                   orderStatusMap[status] ?? '',
                                   style:
-                                      Theme.of(context).textTheme.titleLarge!,
+                                      Theme.of(context).textTheme.titleMedium!,
                                 )),
                             Flexible(child: newMessageSvg),
                           ],
@@ -338,32 +318,33 @@ class SmallCard extends ConsumerWidget {
                                 Expanded(
                                   flex: 6,
                                   child: (className=='invoice')
-                                      ? AutoSizeText(
-                                          bodyList[i].shippedAmount.toString() + 'adet',
-                                          textDirection: TextDirection.ltr,
-                                          maxLines: 1)
-                                      : AutoSizeText(
-                                          bodyList[i].amount.toString() +
-                                              ' adet',
-                                          textDirection: TextDirection.ltr,
-                                          maxLines: 1),
+                                  ? AutoSizeText(
+                                      bodyList[i].shippedAmount.toString() + 'adet',
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1)
+                                  : AutoSizeText(
+                                      bodyList[i].amount.toString() +
+                                          ' adet',
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1
+                                    ),
                                 ),
                                 const Spacer(
                                   flex: 2,
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: (status == 'order_approved' ||
-                                          className == 'proposal'|| className=='invoice')
-                                      ? AutoSizeText(
-                                          bodyList[i].price.toString() + ' ₺',
-                                          textDirection: TextDirection.ltr,
-                                          maxLines: 1)
-                                      : AutoSizeText(
-                                          bodyList[i].amount.toString() +
-                                              ' adet',
-                                          textDirection: TextDirection.ltr,
-                                          maxLines: 1),
+                                  child: 
+                                  (status == 'order_approved' || className == 'proposal'|| className=='invoice')
+                                  ? AutoSizeText(
+                                      bodyList[i].price.toString() + ' ₺',
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1)
+                                  : AutoSizeText(
+                                      bodyList[i].amount.toString() +
+                                          ' adet',
+                                      textDirection: TextDirection.ltr,
+                                      maxLines: 1),
                                 ),
                                 const Spacer(
                                   flex: 1,
@@ -384,39 +365,3 @@ class SmallCard extends ConsumerWidget {
     );
   }
 }
-
-// FutureOr<void> _dialogBuilder(
-//   BuildContext context,
-//   id,
-//   status,
-//   demandName,
-//   date,
-//   paymentType,
-//   demandNo,
-//   deliveryDate,
-//   paymentDueDate,
-//   products
-
-// ) async {
-//   await showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return Dialog(
-//         child: BigCard(
-//           key: context,
-//           id: id,
-//           status: status,
-//           demandName: demandName,
-//           date: date,
-//           paymentType: paymentType,
-//           demandNo: demandNo,
-//           deliveryDate: deliveryDate,
-//           paymentDueDate: paymentDueDate,
-//           products: products
-//         )
-//       );
-//     }
-//   );
-//   debugPrint('------context---------$context');
-//   debugPrint('------after---------$Dialog');
-// }

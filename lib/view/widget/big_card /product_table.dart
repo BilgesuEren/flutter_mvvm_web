@@ -25,32 +25,8 @@ class ProductListTable extends StatelessWidget {
       'order': FlutterI18n.translate(context, "tr.order.description"),
       'proposal': FlutterI18n.translate(context, "tr.proposal.proposal_note"),
     };
+    const surfaceDim = Color(0xFFD8DBD8);
 
-    //     dynamic name;
-    // dynamic description;
-    // dynamic unit;
-    // dynamic productName;
-    // dynamic proposalNote;
-    // dynamic productUnit;
-
-    // Map<String, dynamic> row_1= {
-    //   'order': name,
-    //   'proposal': productName,
-    // };
-
-    // Map<String, dynamic> row_2= {
-    //   'order': description,
-    //   'proposal': proposalNote,
-    // };
-    // Map<String, dynamic> row_3= {
-    //   'order': unit,
-    //   'proposal': productUnit,
-    // };
-
-    debugPrint('productListTable: ${productList.toString()}');
-    
-    
-  
 
     return DataTable2(
       columnSpacing: 10,
@@ -61,7 +37,7 @@ class ProductListTable extends StatelessWidget {
       headingTextStyle: Theme.of(context).textTheme.labelMedium,
       dataTextStyle: Theme.of(context).textTheme.bodySmall,
       dataRowColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.onPrimary),
-      headingRowColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.outlineVariant),
+      headingRowColor: MaterialStateProperty.all<Color>(surfaceDim),
       // empty: Placeholder(),
       columns: [
         const DataColumn2(
