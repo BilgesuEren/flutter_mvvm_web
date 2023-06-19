@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../model/login_model.dart';
 
 
+
 class jwtStorageService{
   late final FlutterSecureStorage _preferences;
 
@@ -17,6 +18,9 @@ class jwtStorageService{
   Future<String> getJwtData()async{
     var _key = await _preferences.read(key: 'jwt');
     return _key ?? '';
+  }
+  Future<void> deleteJwtData() async {
+    await _preferences.delete(key: 'jwt');
   }
 }
 
