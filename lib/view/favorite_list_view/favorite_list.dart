@@ -4,14 +4,14 @@ import '../create_proposal_view/create_proposal_button.dart';
 import '../create_proposal_view/new_offer_request_content.dart';
 import 'favorite_list_table.dart';
 
-class favoriteList extends StatefulWidget {
-  const favoriteList({Key? key}) : super(key: key);
+class favoriteListWidget extends StatefulWidget {
+  const favoriteListWidget({Key? key}) : super(key: key);
 
   @override
-  _FavoriteListState createState() => _FavoriteListState();
+  _FavoriteListWidgetState createState() => _FavoriteListWidgetState();
 }
 
-class _FavoriteListState extends State<favoriteList> {
+class _FavoriteListWidgetState extends State<favoriteListWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

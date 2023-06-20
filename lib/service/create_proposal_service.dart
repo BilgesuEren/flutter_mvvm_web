@@ -47,7 +47,7 @@ class createProposalService {
           "delivery_date": _contentItems.deliveryDate,
           "name": _contentItems.name,
           "requester": "sattadestek10@satta.biz",
-          "demand_no":"485",    //apiden gelmesi lazim  
+          "demand_no":"486",    //apiden gelmesi lazim  
           "products_attributes": _productsAttributes 
         }
       }
