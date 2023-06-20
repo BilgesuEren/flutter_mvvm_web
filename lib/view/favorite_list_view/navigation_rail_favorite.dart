@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class navigationRailFavorite extends StatelessWidget {
+import '../../view_model/favorite_list_view_model.dart';
+
+class navigationRailFavorite extends ConsumerWidget {
   const navigationRailFavorite({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ato = ref.watch(favoriteListProvider);
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
