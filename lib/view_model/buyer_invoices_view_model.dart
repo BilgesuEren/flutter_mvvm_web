@@ -11,7 +11,7 @@ final getInvoicesProvider = FutureProvider<List<GetInvoicesModel>>((ref) async {
   final _invoiceslistservice = getInvoicesService();
   try {
     List<GetInvoicesModel> _orderList = await _invoiceslistservice.getInvoicesListData();
-    debugPrint(_orderList.toString());
+    // debugPrint(_orderList.toString());
     return _orderList;
   } catch (e) {
     if (e is DioException) {

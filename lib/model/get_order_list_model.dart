@@ -155,7 +155,7 @@ class Product {
     int ?productProposalId;
     String ?name;
     int ?categoryId;
-    dynamic ?categoryErpId;
+    dynamic categoryErpId;
     String ?description;
     double ?amount;
     String ?unit;
@@ -204,4 +204,3 @@ class Product {
     return 'Product{productProposalId: $productProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, amount: $amount, unit: $unit, price: $price, currencyCode: $currencyCode, erpId: $erpId, productErpId: $productErpId, proposalNote: $proposalNote}';
   }
 }
-

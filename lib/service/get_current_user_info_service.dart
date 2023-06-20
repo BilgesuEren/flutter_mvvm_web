@@ -26,8 +26,8 @@ class UserService {
           },
         ),
       );
-      debugPrint(response.statusCode.toString());
-      debugPrint(response.data.toString());
+      // debugPrint(response.statusCode.toString());
+      // debugPrint(response.data.toString());
       secureStorageService.saveName(
         response.data['company']['name'],
       );

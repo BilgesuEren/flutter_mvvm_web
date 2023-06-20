@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_mvvm_web/view/widget/small_card.dart';
+import 'package:flutter_mvvm_web/view/widget/small_card/small_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -19,7 +19,7 @@ class invoiceView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final invoiceListAsyncValue = ref.watch(getInvoicesProvider);
-    debugPrint(invoiceListAsyncValue.toString());
+    // debugPrint(invoiceListAsyncValue.toString());
 
     return invoiceListAsyncValue.when(
       data: (invoiceList) {
@@ -53,7 +53,7 @@ class invoiceView extends ConsumerWidget {
           },
         );
       },
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const SizedBox(width: 1),
       error: (error, stack) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.pushNamed(context, '/login');

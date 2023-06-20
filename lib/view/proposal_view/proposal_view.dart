@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mvvm_web/model/get_proposals_by_state.dart';
-import 'package:flutter_mvvm_web/service/get_proposal_by_state_service.dart';
-import 'package:flutter_mvvm_web/view/widget/small_card.dart';
+import 'package:flutter_mvvm_web/view/widget/small_card/small_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
-import '../../model/get_order_list_model.dart';
 import '../../view_model/proposal_view_model.dart';
 import '../widget/appbar.dart';
 import '../widget/main_page_content.dart';
 import '../widget/nav_rail.dart';
-import '../widget/smallcard2.dart';
 
 
 class proposalView extends ConsumerWidget {
@@ -53,7 +49,7 @@ class proposalView extends ConsumerWidget {
           },
         );
       },
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const SizedBox(width: 1),
       error: (error, stack) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.pushNamed(context, '/login');
@@ -96,6 +92,7 @@ class proposalView extends ConsumerWidget {
                       demandNo: proposalList[index].proposalId.toString(),  
                       deliveryDate: proposalList[index].deliveryDate.toString(),
                       paymentDueDate: proposalList[index].paymentDueDate.toString(),
+                      infoBoxRow2: proposalList[index].proposalValidPeriod.toString(),
                       bodyList: proposalList[index].productProposals!, 
                     );
                   },

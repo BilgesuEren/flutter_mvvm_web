@@ -16,5 +16,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
     'invoice_discounted': 'assets/paymentProcess.svg',
     'invoice_approved_dbs': 'assets/DBS.svg',
     'invoice_pending': 'assets/pending.svg',
+    'delivered': 'assets/package.svg',
   };
 
