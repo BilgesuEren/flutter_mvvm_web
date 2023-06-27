@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../model/web_content_model.dart';
 import '../storage/jwt_storage_landing.dart';
 
-class getWebContentService {
+class GetWebContentService {
   static const String _url =
       "https://test.satta.biz/api/v1/seller_point_web_content.json";
 

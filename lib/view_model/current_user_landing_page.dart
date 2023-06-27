@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/get_current_user_info_model.dart';
 import '../service/env_login.dart';
-import 'order_list_view_model.dart';
 
 final getCurrentUserLandingProvider = FutureProvider.autoDispose<CurrentUserInfoModel>((ref) async {
   final autService = LandingPageService();

@@ -3,7 +3,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../model/get_current_user_info_model.dart';
+import '../../../model/web_content_model.dart';
+import '../../../service/get_web_content_service.dart';
 import '../../../view_model/current_user_landing_page.dart';
+import '../../../view_model/landing_view_model.dart';
 
 class Products extends ConsumerWidget {
   final int sectionIndex;
@@ -68,48 +71,53 @@ class _ProductTitleState extends ConsumerState<ProductTitle> {
 class _ProductDetailState extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userInfoFuture = ref.watch(getCurrentUserLandingProvider);
-    return userInfoFuture.when(
-      data: (CurrentUserInfoModel data) {
-        final user = data.currentUser;
-        final company = data.company;
+    final landingProvider = ref.watch(getLandingViewContentProvider);
+    return landingProvider.when(
+      data: (contentList) {
+        debugPrint("data: $contentList");
+        final webContent = contentList ;
+        // final products = contentList.products;
 
         // return user and company object
-        final userProperties = user!.toMap().values.toList();
-        final companyProperties = company!.toMap().values.toList();
-
-        return ListView(
-          children: [
-            Text(
-              "User Info:",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Wrap(
-              spacing: 8.0, 
-              runSpacing: 4.0, 
-              children: userProperties
-                  .map(
-                    (prop) => Text('${prop.toString()},',
-                        style: Theme.of(context).textTheme.bodySmall),
-                  )
-                  .toList(),
-            ),
-            Text(
-              "Company Info:",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Wrap(
-              spacing: 8.0,
-              runSpacing: 4.0, 
-              children: companyProperties
-                  .map(
-                    (prop) => Text('${prop.toString()},',
-                        style: Theme.of(context).textTheme.bodySmall),
-                  )
-                  .toList(),
-            ),
-          ],
+        final webContentProperties = webContent.asMap().values.toList();
+        // final productProperties = products!.asMap().values.toList();
+        debugPrint("webContentProperties: $webContentProperties");
+        // debugPrint("productProperties: $productProperties");
+        return Container(
         );
+
+        // return ListView(
+        //   children: [
+        //     Text(
+        //       "User Info:",
+        //       style: Theme.of(context).textTheme.titleLarge,
+        //     ),
+        //     Wrap(
+        //       spacing: 8.0, 
+        //       runSpacing: 4.0, 
+        //       children: userProperties
+        //           .map(
+        //             (prop) => Text('${prop.toString()},',
+        //                 style: Theme.of(context).textTheme.bodySmall),
+        //           )
+        //           .toList(),
+        //     ),
+        //     Text(
+        //       "Company Info:",
+        //       style: Theme.of(context).textTheme.titleLarge,
+        //     ),
+        //     Wrap(
+        //       spacing: 8.0,
+        //       runSpacing: 4.0, 
+        //       children: companyProperties
+        //           .map(
+        //             (prop) => Text('${prop.toString()},',
+        //                 style: Theme.of(context).textTheme.bodySmall),
+        //           )
+        //           .toList(),
+        //     ),
+        //   ],
+        // );
       },
       loading: () => CircularProgressIndicator(),
       error: (error, stackTrace) => Text('Error: $error'),
