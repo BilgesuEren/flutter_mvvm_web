@@ -46,6 +46,11 @@ class WebContentModel {
         "bg_image": bgImage,
         "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toMap())),
     };
+
+  @override
+  String toString() {
+    return 'WebContentModel(companyId: $companyId, title: $title, introduction: $introduction, address: $address, footer: $footer, bgImage: $bgImage, products: $products)';
+  }  
 }
 
 class Product {

@@ -68,8 +68,6 @@ class LandingPageService {
             error: 'HTTP status error: ${response.statusCode}');
       }
 
-      debugPrint(response.data.toString());
-
       CurrentUserInfoModel currentUserInfoModel =
           CurrentUserInfoModel.fromMap(response.data);
 
@@ -103,7 +101,16 @@ class LandingPageService {
             requestOptions: response.requestOptions,
             error: 'HTTP status error: ${response.statusCode}');
       }
-      return response.data;
+
+      List<dynamic> data = response.data;
+      data.forEach((element) {
+        WebContentModel webContentModel = WebContentModel.fromMap(response.data);
+        if (webContentModel != null) {
+          _list.add(webContentModel);
+        }
+      });
+
+      return _list;
     } catch (e) {
       throw e;
     }
