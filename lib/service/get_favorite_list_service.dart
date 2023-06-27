@@ -34,7 +34,7 @@ class getFavoriteListService {
 
       List _data = _response.data['favorite_lists'];
 
-      debugPrint("Received data from server: $_data");
+      debugPrint("Received data from server: ${_data.toString()}");
 
       _data.forEach((element) {
         GetFavoriteListModel getOrderlistModel =

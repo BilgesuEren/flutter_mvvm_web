@@ -1,0 +1,14 @@
+com.example.flutter_mvvm_web.app-jetified-window-java-1.0.0-beta04-0 /home/atakan/.gradle/caches/transforms-3/006d93cd422dbc43e89591147c2de572/transformed/jetified-window-java-1.0.0-beta04/res
+com.example.flutter_mvvm_web.app-core-1.6.0-1 /home/atakan/.gradle/caches/transforms-3/4ca28c4a71705f8a687c69dda140a277/transformed/core-1.6.0/res
+com.example.flutter_mvvm_web.app-jetified-security-crypto-1.1.0-alpha04-2 /home/atakan/.gradle/caches/transforms-3/721f6ff27a9d2d34046694447893c707/transformed/jetified-security-crypto-1.1.0-alpha04/res
+com.example.flutter_mvvm_web.app-jetified-annotation-experimental-1.1.0-3 /home/atakan/.gradle/caches/transforms-3/8965c941cf4bee4d72541b965c7c9d39/transformed/jetified-annotation-experimental-1.1.0/res
+com.example.flutter_mvvm_web.app-jetified-window-1.0.0-beta04-4 /home/atakan/.gradle/caches/transforms-3/dee59bb480020f42d53c2ea15e4501f7/transformed/jetified-window-1.0.0-beta04/res
+com.example.flutter_mvvm_web.app-main-5 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/android/app/src/main/res
+com.example.flutter_mvvm_web.app-release-6 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/android/app/src/release/res
+com.example.flutter_mvvm_web.app-pngs-7 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/generated/res/pngs/release
+com.example.flutter_mvvm_web.app-resValues-8 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/generated/res/resValues/release
+com.example.flutter_mvvm_web.app-rs-9 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/generated/res/rs/release
+com.example.flutter_mvvm_web.app-mergeReleaseResources-10 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.example.flutter_mvvm_web.app-mergeReleaseResources-11 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.example.flutter_mvvm_web.app-merged_res-12 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/app/intermediates/merged_res/release
+com.example.flutter_mvvm_web.app-packaged_res-13 /home/atakan/dev2/satta_paletpoint2/flutter_mvvm_web/build/flutter_secure_storage/intermediates/packaged_res/release
