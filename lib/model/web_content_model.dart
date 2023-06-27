@@ -50,7 +50,8 @@ class WebContentModel {
   @override
   String toString() {
     return 'WebContentModel(companyId: $companyId, title: $title, introduction: $introduction, address: $address, footer: $footer, bgImage: $bgImage, products: $products)';
-  }  
+  }
+    
 }
 
 class Product {
@@ -79,4 +80,8 @@ class Product {
         "product_details": productDetails,
         "product_image": productImage,
     };
+    @override
+    String toString() {
+        return 'Product(categoryId: $categoryId, productDetails: $productDetails, productImage: $productImage)';
+    }
 }

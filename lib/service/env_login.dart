@@ -81,38 +81,32 @@ class LandingPageService {
       defaultValue: 'http://localhost');
 
   Future getWebContentListData() async {
-    _dio.options.responseType = ResponseType.json;
-    List<WebContentModel> _list = [];
+  _dio.options.responseType = ResponseType.json;
 
-    try {
-      final _jwt = await jwtStorageLandingService().getJwtData();
+  try {
+    final _jwt = await jwtStorageLandingService().getJwtData();
 
-      var response = await _dio.get(
-        _apiUrlContent2,
-        options: Options(
-          headers: {
-            "Authorization": _jwt,
-          },
-        ),
-      );
+    var response = await _dio.get(
+      _apiUrlContent2,
+      options: Options(
+        headers: {
+          "Authorization": _jwt,
+        },
+      ),
+    );
 
-      if (response.statusCode != 200) {
-        throw DioException(
-            requestOptions: response.requestOptions,
-            error: 'HTTP status error: ${response.statusCode}');
-      }
-
-      List<dynamic> data = response.data;
-      data.forEach((element) {
-        WebContentModel webContentModel = WebContentModel.fromMap(response.data);
-        if (webContentModel != null) {
-          _list.add(webContentModel);
-        }
-      });
-
-      return _list;
-    } catch (e) {
-      throw e;
+    if (response.statusCode != 200) {
+      throw DioException(
+          requestOptions: response.requestOptions,
+          error: 'HTTP status error: ${response.statusCode}');
     }
+
+    WebContentModel webContentModel = WebContentModel.fromMap(response.data);
+
+    return webContentModel;
+  } catch (e) {
+    throw e;
   }
+}
+
 }

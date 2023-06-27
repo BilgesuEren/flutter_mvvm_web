@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/web_content_model.dart';
 import '../service/env_login.dart';
 
-final getLandingViewContentProvider = FutureProvider<List<WebContentModel>>((ref) async {
+final getLandingViewContentProvider = FutureProvider<WebContentModel>((ref) async {
   final landingPageService = LandingPageService();
-  List<WebContentModel> contentList = [];
+  WebContentModel contentList;
   try {
     contentList = await landingPageService.getWebContentListData();
     debugPrint("content: $contentList");

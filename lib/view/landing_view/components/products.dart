@@ -79,9 +79,10 @@ class _ProductDetailState extends ConsumerWidget {
         // final products = contentList.products;
 
         // return user and company object
-        final webContentProperties = webContent.asMap().values.toList();
+        final webContentProperties = webContent;
         // final productProperties = products!.asMap().values.toList();
         debugPrint("webContentProperties: $webContentProperties");
+        debugPrint("webContentProperties: ${webContentProperties.products}");
         // debugPrint("productProperties: $productProperties");
         return Container(
         );
