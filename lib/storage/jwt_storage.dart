@@ -22,7 +22,9 @@ class jwtStorageService{
   Future<void> deleteJwtData() async {
     await _preferences.delete(key: 'jwt');
   }
+  
 }
+
 
 /* 
 import 'package:localstorage/localstorage.dart';

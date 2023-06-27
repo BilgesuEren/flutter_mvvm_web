@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_web/view/landing_view/landing_view.dart';
 
 import '../view/invoice_view/invoice_view.dart';
 import '../view/login_view/login_view.dart';
@@ -12,6 +13,7 @@ final Map<String, WidgetBuilder> routes = {
   '/orderScreen': (BuildContext context) => OrderView(),
   '/proposalScreen': (BuildContext context) => proposalView(),
   '/invoiceScreen': (BuildContext context) => invoiceView(),
+  '/LandingScreen': (BuildContext context) => LandingView(),
 
 
 };

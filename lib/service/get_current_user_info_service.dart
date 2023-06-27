@@ -23,7 +23,7 @@ class UserService {
         ),
       );
       if (response.statusCode != 200) {
-        throw DioError(
+        throw DioException(
             requestOptions: response.requestOptions,
             error: 'HTTP status error: ${response.statusCode}');
       }
