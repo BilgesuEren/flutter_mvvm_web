@@ -1,145 +1,93 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../model/get_current_user_info_model.dart';
-import '../../../model/web_content_model.dart';
-import '../../../service/get_web_content_service.dart';
-import '../../../view_model/current_user_landing_page.dart';
-import '../../../view_model/landing_view_model.dart';
-
-class Products extends ConsumerWidget {
+class Products extends StatelessWidget {
   final int sectionIndex;
-  const Products({Key? key, required this.sectionIndex}) : super(key: key);
+  final String  ?productDetails;
+  final String ?productImage;
+  final int ?index;
+  const Products({
+    Key? key, 
+    required this.sectionIndex,
+    this.index, this.productDetails, this.productImage,
+  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    const Color surfaceContainer = Color(0xFFECEEEB);
-
-    return Row(
-      children: [
-        Expanded(
-          flex: 6,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: surfaceContainer,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-              ),
-            ),
-            padding: const EdgeInsets.all(40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                ProductTitle(),
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 60.0, right: 20.0),
-                    child: _ProductDetailState(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // SizedBox(width: 50),
-        const Expanded(
-          flex: 6,
-          child: ProductImage(),
-        ),
-      ],
-    );
-  }
-}
-
-class ProductTitle extends ConsumerStatefulWidget {
-  const ProductTitle({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProductTitleState();
-}
-
-class _ProductTitleState extends ConsumerState<ProductTitle> {
   @override
   Widget build(BuildContext context) {
-    return AutoSizeText("Palet Point",
-        style: Theme.of(context).textTheme.displayMedium, maxLines: 2);
-  }
-}
+    
 
-class _ProductDetailState extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final landingProvider = ref.watch(getLandingViewContentProvider);
-    return landingProvider.when(
-      data: (contentList) {
-        debugPrint("data: $contentList");
-        final webContent = contentList ;
-        // final products = contentList.products;
-
-        // return user and company object
-        final webContentProperties = webContent;
-        // final productProperties = products!.asMap().values.toList();
-        debugPrint("webContentProperties: $webContentProperties");
-        debugPrint("webContentProperties: ${webContentProperties.products}");
-        // debugPrint("productProperties: $productProperties");
-        return Container(
-        );
-
-        // return ListView(
-        //   children: [
-        //     Text(
-        //       "User Info:",
-        //       style: Theme.of(context).textTheme.titleLarge,
-        //     ),
-        //     Wrap(
-        //       spacing: 8.0, 
-        //       runSpacing: 4.0, 
-        //       children: userProperties
-        //           .map(
-        //             (prop) => Text('${prop.toString()},',
-        //                 style: Theme.of(context).textTheme.bodySmall),
-        //           )
-        //           .toList(),
-        //     ),
-        //     Text(
-        //       "Company Info:",
-        //       style: Theme.of(context).textTheme.titleLarge,
-        //     ),
-        //     Wrap(
-        //       spacing: 8.0,
-        //       runSpacing: 4.0, 
-        //       children: companyProperties
-        //           .map(
-        //             (prop) => Text('${prop.toString()},',
-        //                 style: Theme.of(context).textTheme.bodySmall),
-        //           )
-        //           .toList(),
-        //     ),
-        //   ],
-        // );
-      },
-      loading: () => CircularProgressIndicator(),
-      error: (error, stackTrace) => Text('Error: $error'),
+    return Padding(
+      padding: const EdgeInsets.only(left: 80.0, right: 80.0, top: 40.0, bottom: 40.0),
+      child: Container(
+        
+        height: 400,
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            bottomLeft: Radius.circular(20), 
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 6,
+              child: ProductTitle(productDetails: productDetails ?? " ",),
+            ),
+            // SizedBox(width: 50),
+            Expanded(
+            flex: 6,
+            child: ProductImage(productImage: productImage ?? " "),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class ProductImage extends ConsumerStatefulWidget {
-  const ProductImage({super.key});
+class ProductTitle extends StatelessWidget {
+  final String ?productDetails;
+
+  const ProductTitle({super.key, this.productDetails});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProductImageState();
+  Widget build(BuildContext context) {
+    const Color surfaceContainer = Color(0xFFECEEEB);
+    return Container(
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        color: surfaceContainer,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+        ),
+      ),
+      child: AutoSizeText(productDetails ?? " ",
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w400,
+          ), maxLines: 4),
+    );
+  }
+  
 }
 
-class _ProductImageState extends ConsumerState<ProductImage> {
+class ProductImage extends StatelessWidget {
+  final String ?productImage;
+  const ProductImage({super.key, this.productImage});
+
   static const Color surfaceContainer = Color(0xFFECEEEB);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(60.0),
+      // padding: const EdgeInsets.all(60.0),
+      alignment: AlignmentDirectional.center,
+      constraints: const BoxConstraints(
+        maxHeight: 400,
+        maxWidth: 200,
+      ),
       decoration: const BoxDecoration(
         color: surfaceContainer,
         borderRadius: BorderRadius.only(
@@ -147,9 +95,15 @@ class _ProductImageState extends ConsumerState<ProductImage> {
           bottomRight: Radius.circular(20),
         ),
       ),
-      child: Image.asset(
-        'assets/images/product_image.jpg',
-        fit: BoxFit.contain,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(
+            productImage ?? " ",
+            errorBuilder: (context, error, stackTrace) => const SizedBox(),
+            fit: BoxFit.cover,
+            width: 320,
+            height: 320,
+          ),
       ),
     );
   }
