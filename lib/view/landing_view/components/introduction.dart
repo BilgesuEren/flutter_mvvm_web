@@ -1,9 +1,7 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 class Introduction extends StatelessWidget {
   final int sectionIndex;
@@ -26,7 +24,6 @@ class Introduction extends StatelessWidget {
       children : [
         Container(  
         width: double.infinity,
-        height: 400,
         padding: const EdgeInsets.all(32.0),
         decoration: BoxDecoration(
           color: surfaceContainer,
