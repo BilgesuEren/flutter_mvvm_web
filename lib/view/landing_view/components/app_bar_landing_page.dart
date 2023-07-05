@@ -27,10 +27,10 @@ class AppbarLandingPage extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () => _scrollToSection(context, 1),
         ),
         SizedBox(width: screenSize.width / 25),
-        HoverActionButton(
-          label: 'İletişim',
-          onPressed: () => _scrollToSection(context, 2),
-        ),
+        // HoverActionButton(
+        //   label: 'İletişim',
+        //   onPressed: () => _scrollToSection(context, 2),
+        // ),
        const SizedBox(width: 70,)
       ],
     );
@@ -85,8 +85,9 @@ class HoverActionButtonState extends State<HoverActionButton> {
           child: Text(
             widget.label,
             style: _isHovered 
-            ? Theme.of(context).textTheme.titleLarge!.copyWith(
+            ? Theme.of(context).textTheme.titleMedium!.copyWith(
               color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
               fontSize: 20,
             )
             :  Theme.of(context).textTheme.titleMedium!.copyWith(
