@@ -14,12 +14,12 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
     
 
     return Padding(
       padding: const EdgeInsets.only(left: 80.0, right: 80.0, top: 40.0, bottom: 40.0),
       child: Container(
-        
         height: 400,
         decoration:  BoxDecoration(
           color: Theme.of(context).colorScheme.surface,

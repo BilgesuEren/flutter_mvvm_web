@@ -20,39 +20,32 @@ class Introduction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Color surfaceContainer = Color(0xFFECEEEB);
-    return Stack(
-      children : [
-        Container(  
-        width: double.infinity,
-        padding: const EdgeInsets.all(32.0),
-        decoration: BoxDecoration(
-          color: surfaceContainer,
-          image: DecorationImage(
-            image: NetworkImage(bgImage ?? ""),
-            // errorBuilder: (context, error, stackTrace) => const SizedBox(), 
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:  <Widget>[
-            Title(title),
-            const Padding(padding: EdgeInsets.only(top: 16.0)),
-            SizedBox(
-              width: 500,
-              height: 108,
-              child: About(introduction ?? ""),
-            ),
-            const Spacer(flex: 1),
-            const LogInButton(),
-            const SizedBox(height: 10),
-            const SignIn(),
-      
-          ],
-        ),
+    return Container(  
+    width: double.infinity,
+    height: double.infinity,
+    // padding: const EdgeInsets.all(32.0),
+    decoration: BoxDecoration(
+      color: surfaceContainer,
+      image: DecorationImage(
+        image: NetworkImage(bgImage ?? ""),
+        // errorBuilder: (context, error, stackTrace) => const SizedBox(), 
+        fit: BoxFit.fill,
       ),
-      ]
-    );
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children:  <Widget>[
+        Title(title),
+        const Padding(padding: EdgeInsets.only(top: 16.0)),
+        About(introduction ?? ""),
+        const Spacer(flex: 1),
+        const LogInButton(),
+        const SizedBox(height: 10),
+        const SignIn(),
+      
+      ],
+    ),
+      );
   }
 }
 class Title extends StatelessWidget {
